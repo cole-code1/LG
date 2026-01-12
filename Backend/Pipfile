@@ -9,8 +9,9 @@ flask-sqlalchemy = "*"
 flask-mail = "*"
 flask-cors = "*"
 python-dotenv = "*"
+gunicorn = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.13"
+python_version = "*"
