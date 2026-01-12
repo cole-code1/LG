@@ -64,7 +64,7 @@ export default function Blog() {
   ];
 
   return (
-    <section className="relative pt-32 pb-20 bg-gradient-to-b from-[#FFF7ED] to-[#FFE8CC] min-h-screen overflow-hidden">
+    <section className="relative pt-32 pb-20 bg-gradient-to-b from-[#FFF7ED] to-[#FFE8CC]  overflow-hidden">
       {/* Gradient overlay for depth */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none bg-gradient-to-tr from-[#FFD699] via-[#FFB870] to-[#FFCBA0] opacity-20"></div>
 

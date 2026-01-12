@@ -1,122 +1,169 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { FaStar } from "react-icons/fa";
+import FadeInSection from "../components/FadeInSection";
 
 // Example project images
-import EcommerceImg from "../assets/images/Donex.png";
-// import MarketingImg from "../assets/images/project-marketing.jpg";
-// import SEOImg from "../assets/images/project-seo.jpg";
+const Project1Img = "https://res.cloudinary.com/daqtttdb0/image/upload/v1768241514/Donex_vzsfsa.png";
+// import Project2Img from "../assets/images/project2.jpg";
+const Project3Img = "https://res.cloudinary.com/daqtttdb0/image/upload/v1768241505/portfolio_nivt72.png";
 
 export default function Projectsboard() {
-  const projects = [
+  const projectsData = [
     {
-      title: "Automated Donation Platform Website",
-      description:
-        "A fully responsive donation platform with payment gateway and admin panel.",
-      tags: ["React", "Tailwind", "API", "Stripe"],
-      image: EcommerceImg,
+      id: 1,
+      title: "automated donation Platform",
+      category: "Web Development",
+      description: "Modern donation platform with React and TailwindCSS.",
+      image: Project1Img,
+      tech: ["React", "Tailwind", "Node.js"],
     },
+    // {
+    //   id: 2,
+    //   title: "SEO Campaign",
+    //   category: "Digital Marketing",
+    //   description: "Increased organic traffic by 250% in 3 months.",
+    //   image: Project2Img,
+    //   tech: ["SEO", "Analytics", "Content Marketing"],
+    // },
     {
-      title: "Digital Marketing Campaign",
-      description:
-        "Social media and paid ad campaign that increased conversions by 35%.",
-      tags: ["SEO", "Meta Ads", "Google Ads", "Analytics"],
-    //   image: MarketingImg,
+      id: 3,
+      title: "Portfolio Website",
+      category: "Web Development",
+      description: "Personal branding website with smooth animations.",
+      image: Project3Img,
+      tech: ["React", "Framer Motion", "Tailwind"],
     },
-    {
-      title: "SEO Optimization Project",
-      description:
-        "On-page and technical SEO for a corporate website to rank higher on Google.",
-      tags: ["SEO", "Technical SEO", "Analytics", "Content Strategy"],
-    //   image: SEOImg,
-    },
+    // Add more projects here
   ];
 
+  const [filter, setFilter] = useState("All");
+  const [search, setSearch] = useState("");
+  const [modalProject, setModalProject] = useState(null);
+
+  const categories = ["All", "Web Development", "Digital Marketing", "SEO"];
+
+  const filteredProjects = projectsData.filter((project) => {
+    const matchesCategory = filter === "All" || project.category === filter;
+    const matchesSearch = project.title.toLowerCase().includes(search.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
+
   return (
-    <section className="relative pt-32 pb-20 bg-gradient-to-b from-[#FFF7ED] to-[#FFE8CC] min-h-screen overflow-hidden">
-      {/* Gradient overlay for depth */}
-      <div className="absolute top-0 left-0 w-full h-full pointer-events-none bg-gradient-to-tr from-[#FFD699] via-[#FFB870] to-[#FFCBA0] opacity-20"></div>
+    <div className="min-h-screen bg-gradient-to-b from-[#FFF7ED] to-[#FFE8CC] py-16 px-6 sm:px-12">
+      {/* HEADER */}
+      <FadeInSection>
+        <h1 className="text-4xl sm:text-5xl font-extrabold text-center mb-6 text-orange-500"
+        style={{ textShadow: "0 0 15px #FF9F43, 0 0 25px #FFB870" }}>
+          Projects Board
+        </h1>
+        <p className="text-center text-gray-700 mb-8 max-w-4xl mx-auto">
+          Explore our projects, filter by category or search by title. Click a card to view details.
+        </p>
 
-      <div className="relative max-w-7xl mx-auto px-6 z-10">
-        {/* HEADER */}
-        <header className="mb-16 text-center">
-          <h1
-            className="text-5xl font-extrabold mb-4 text-white-500"
-            style={{ textShadow: "0 0 15px #fffcfa, 0 0 25px #000000" }}
-          >
-            Our Projects
-          </h1>
-          <p
-            className="text-gray-700 text-lg"
-            style={{ textShadow: "0 0 5px #FF9F43" }}
-          >
-            Explore some of the digital solutions we've built for our clients.
-          </p>
-        </header>
+        {/* Search bar */}
+        <div className="flex justify-center mb-6">
+          <input
+            type="text"
+            placeholder="Search projects..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="px-4 py-2 rounded-lg border border-gray-300 w-full max-w-md focus:outline-none focus:ring-2 focus:ring-orange-400"
+          />
+        </div>
 
-        {/* PROJECT CARDS */}
-        <div className="grid gap-16">
-          {projects.map((project, index) => (
-            <motion.section
-              key={index}
-              className={`grid md:grid-cols-2 gap-10 items-center ${
-                index % 2 !== 0 ? "md:flex-row-reverse" : ""
-              } bg-white rounded-2xl shadow-lg overflow-hidden`}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
+        {/* Filters */}
+        <div className="flex justify-center gap-4 flex-wrap mb-12">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setFilter(cat)}
+              className={`px-6 py-2 rounded-full font-semibold transition ${
+                filter === cat
+                  ? "bg-orange-500 text-white"
+                  : "bg-white text-gray-700 border border-gray-300 hover:bg-orange-100"
+              }`}
             >
-              {/* TEXT */}
-              <div className="p-8">
-                {index > 0 && (
-                  <div className="flex justify-center md:justify-start mb-4">
-                    <FaStar className="text-orange-400 text-xl animate-pulse" />
-                  </div>
-                )}
+              {cat}
+            </button>
+          ))}
+        </div>
+      </FadeInSection>
 
-                <h2
-                  className="text-3xl font-bold mb-4 text-orange-500"
-                  style={{
-                    textShadow: "0 0 10px #FF9F43, 0 0 20px #FFB870",
-                  }}
-                >
-                  {project.title}
-                </h2>
-                <p
-                  className="text-gray-800 mb-6 leading-relaxed"
-                  style={{ textShadow: "0 0 3px #FFAB6B" }}
-                >
-                  {project.description}
-                </p>
+      {/* PROJECT GRID */}
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {filteredProjects.map((project) => (
+          <FadeInSection key={project.id}>
+            <motion.div
+              whileHover={{ y: -5, scale: 1.02 }}
+              transition={{ duration: 0.3 }}
+              className="bg-gradient-to-r from-orange-50 via-white to-orange-50 rounded-2xl shadow-lg overflow-hidden cursor-pointer"
+              onClick={() => setModalProject(project)}
+            >
+              <div className="relative overflow-hidden">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-48 object-cover transition-transform duration-500 hover:scale-105"
+                />
+              </div>
+              <div className="p-6">
+                <h2 className="text-xl font-bold mb-2 text-orange-500">{project.title}</h2>
+                <p className="text-gray-600 mb-4">{project.description}</p>
 
-                {/* Tags */}
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.tags.map((tag, i) => (
+                {/* Tech stack badges */}
+                <div className="flex flex-wrap gap-2">
+                  {project.tech.map((tech, idx) => (
                     <span
-                      key={i}
-                      className="bg-orange-100 text-orange-600 text-sm font-semibold px-3 py-1 rounded-full transition hover:bg-orange-200"
+                      key={idx}
+                      className="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-sm font-semibold"
                     >
-                      {tag}
+                      {tech}
                     </span>
                   ))}
                 </div>
               </div>
-
-              {/* IMAGE */}
-              <div className="overflow-hidden md:rounded-r-2xl rounded-b-2xl md:rounded-l-none shadow-lg">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-64 md:h-full object-cover transition-transform duration-500 hover:scale-105"
-                />
-              </div>
-            </motion.section>
-          ))}
-
-          {/* Section Divider */}
-          <div className="my-12 h-[2px] bg-gradient-to-r from-orange-300 via-orange-400 to-orange-300 rounded-full opacity-50"></div>
-        </div>
+            </motion.div>
+          </FadeInSection>
+        ))}
       </div>
-    </section>
+
+      {/* MODAL */}
+      {modalProject && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+          onClick={() => setModalProject(null)}
+        >
+          <div
+            className="bg-white rounded-2xl max-w-lg w-full p-6 relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setModalProject(null)}
+              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 font-bold text-xl"
+            >
+              &times;
+            </button>
+            <img
+              src={modalProject.image}
+              alt={modalProject.title}
+              className="w-full h-64 object-cover rounded-xl mb-4"
+            />
+            <h2 className="text-2xl font-bold mb-2 text-orange-500">{modalProject.title}</h2>
+            <p className="text-gray-700 mb-4">{modalProject.description}</p>
+            <div className="flex flex-wrap gap-2 mb-4">
+              {modalProject.tech.map((tech, idx) => (
+                <span
+                  key={idx}
+                  className="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-sm font-semibold"
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
+
+          </div>
+        </div>
+      )}
+    </div>
   );
 }

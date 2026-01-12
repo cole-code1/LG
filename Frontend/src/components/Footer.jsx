@@ -2,7 +2,7 @@
 import { Instagram, Mail, Facebook, Twitter } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import {logo} from "../src/assets/images/logo.png";
+// import {logo} from "../src/assets/images/logo.png";
 export default function Footer() {
   const socialLinks = [
     { name: "Instagram", icon: <Instagram size={20} />, link: "https://instagram.com/yourusername", color: "#FF6B81" },
@@ -26,7 +26,7 @@ export default function Footer() {
         
         {/* Logo & Text */}
         <div className="text-center md:text-left">
-          <img src={logo} alt="Logo" className="h-10 w-auto mx-auto md:mx-0 mb-4" />
+          {/* <img src={logo} alt="Logo" className="h-10 w-auto mx-auto md:mx-0 mb-4" /> */}
           <p className="text-white/70">© {new Date().getFullYear()} LG Marketing Hub. All rights reserved.</p>
         </div>
 

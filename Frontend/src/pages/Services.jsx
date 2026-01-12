@@ -7,9 +7,9 @@ import { FaStar } from "react-icons/fa";
 import "./Home.css";
 
 // Images
-import DigitalMarketingImg from "../assets/images/Marketing.jpg";
-import WebDevelopmentImg from "../assets/images/web-development.jpg";
-import SEOImg from "../assets/images/SEO.jpg";
+const DigitalMarketingImg = "https://res.cloudinary.com/daqtttdb0/image/upload/v1768241399/Marketing_o540uk.jpg";
+const WebDevelopmentImg = "https://res.cloudinary.com/daqtttdb0/image/upload/v1768241402/web-development_hci4yv.jpg;"
+const SEOImg = "https://res.cloudinary.com/daqtttdb0/image/upload/v1768241405/SEO_i4ndhf.jpg;"
 
 export default function ServicesPage() {
   const navigate = useNavigate();

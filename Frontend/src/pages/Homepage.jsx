@@ -22,7 +22,7 @@ export default function Home() {
   ];
 
   return (
-    <div className="container-bg min-h-screen">
+    <div className="container-bg ">
       {/* HERO SECTION */}
       <section className="pt-28 text-white text-center relative z-10">
         <div className="max-w-7xl mx-auto px-6 py-24">
