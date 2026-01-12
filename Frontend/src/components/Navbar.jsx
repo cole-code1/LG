@@ -1,109 +1,236 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import logo from "../assets/images/logo.png";
+
+
 export default function Navbar() {
-  const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation();
+  const [hovered, setHovered] = useState(null);
   const [servicesOpen, setServicesOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [mobileHovered, setMobileHovered] = useState(null);
 
+  const links = [
+    { name: "Home", path: "/" },
+    { name: "Services", path: "/services", dropdown: true },
+    { name: "Projectsboard", path: "/projectsboard" },
+    { name: "Blog", path: "/blog" },
+    { name: "About", path: "/about" },
+    { name: "Contact", path: "/contact" },
+  ];
 
-  // Glow effect class for all nav links
-  const glowLink = `
-    relative transition-all duration-300
-    after:absolute after:-bottom-1 after:left-0 after:w-full after:h-1
-    after:bg-indigo-400 after:rounded-full after:opacity-0
-    hover:after:opacity-100 after:scale-x-0 hover:after:scale-x-100
-    after:transition-transform after:duration-300
-  `;
+  const services = [
+    { title: "Digital Marketing", link: "/services#digital-marketing" },
+    { title: "Web Development", link: "/services#web-development" },
+    { title: "SEO", link: "/services#seo" },
+  ];
+
+  // Auto-close mobile menu on route change
+  useEffect(() => {
+    setMenuOpen(false);
+    setServicesOpen(false);
+    setMobileHovered(null);
+  }, [location]);
 
   return (
-    <nav className="fixed w-full z-50 bg-transparent backdrop-blur-md transition-colors duration-300">
+    <nav className="fixed top-0 w-full z-50 bg-white/70 dark:bg-gray-900/60 backdrop-blur-md border-b border-white/30 dark:border-white/10">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex h-16 items-center justify-between">
 
           {/* Logo */}
-          <Link to="/" className="text-2xl font-bold text-indigo-600 dark:text-indigo-400">
-            <img src={logo} alt="Logo" className="h-26 w-26" />
+          <Link to="/" className="flex items-center">
+            <img src={logo} alt="Logo" className="h-25 w-auto" />
           </Link>
 
           {/* Desktop Menu */}
-          <ul className="hidden md:flex items-center space-x-8 font-medium text-gray-700 dark:text-gray-200">
-            <li><Link to="/" className={`${glowLink} hover:text-indigo-500 dark:hover:text-indigo-300`}>Home</Link></li>
+          <ul className="hidden md:flex items-center space-x-2 relative">
+            {links.map((link) => {
+              const isActive =
+                link.path === "/services"
+                  ? location.pathname.startsWith("/services")
+                  : location.pathname === link.path;
 
-            {/* Services Dropdown */}
-            <li
-              className="relative"
-              onMouseEnter={() => setServicesOpen(true)}
-              onMouseLeave={() => setServicesOpen(false)}
-            >
-              <span className={`${glowLink} cursor-pointer hover:text-indigo-500 dark:hover:text-indigo-300`}>
-                Services
-              </span>
-              <ul className={`absolute left-0 mt-2 w-52 bg-white dark:bg-gray-800 rounded-md shadow-lg transition-all duration-300 transform ${
-                servicesOpen ? "opacity-100 scale-100 visible" : "opacity-0 scale-95 invisible"
-              }`}>
-                {[{ title: "Digital Marketing", link: "/services#digital-marketing" },
-                  { title: "Web Development", link: "/services#web-development" },
-                  { title: "SEO", link: "/services#seo" }].map((item, i) => (
-                  <li key={i} className="px-4 py-2 hover:bg-indigo-50 dark:hover:bg-gray-700 transition-all duration-300">
-                    <Link to={item.link} className="hover:text-indigo-600 dark:hover:text-indigo-300 transition-all duration-300">
-                      {item.title}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </li>
+              return (
+                <li
+                  key={link.path}
+                  className="relative"
+                  onMouseEnter={() => {
+                    setHovered(link.path);
+                    if (link.dropdown) setServicesOpen(true);
+                  }}
+                  onMouseLeave={() => {
+                    setHovered(null);
+                    if (link.dropdown) setServicesOpen(false);
+                  }}
+                >
+                  {/* Desktop Active bubble */}
+                  {isActive && (
+                    <motion.span
+                      layoutId="nav-bubble"
+                      className="absolute inset-0 rounded-full bg-orange-500"
+                      transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                    />
+                  )}
 
-            <li><Link to="/projectsboard" className={`${glowLink} hover:text-indigo-500 dark:hover:text-indigo-300`}>Projectsboard</Link></li>
-            <li><Link to="/blog" className={`${glowLink} hover:text-indigo-500 dark:hover:text-indigo-300`}>Blog</Link></li>
-            <li><Link to="/about" className={`${glowLink} hover:text-indigo-500 dark:hover:text-indigo-300`}>About</Link></li>
-            <li><Link to="/contact" className={`${glowLink} hover:text-indigo-500 dark:hover:text-indigo-300`}>Contact</Link></li>
+                  {/* Desktop Hover bubble */}
+                  <AnimatePresence>
+                    {hovered === link.path && !isActive && (
+                      <motion.span
+                        layoutId="nav-hover"
+                        className="absolute inset-0 rounded-full bg-orange-400/90 blur-md"
+                        initial={{ opacity: 0, scale: 0.85 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.85 }}
+                        transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                      />
+                    )}
+                  </AnimatePresence>
 
+                  <Link
+                    to={link.path}
+                    className="relative z-10 px-5 py-2 font-medium text-gray-800 dark:text-gray-200 hover:text-white transition-colors"
+                  >
+                    {link.name}
+                  </Link>
+
+                  {/* Desktop Services Dropdown */}
+                  {link.dropdown && servicesOpen && (
+                    <motion.ul
+                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                      transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                      className="absolute left-0 mt-3 w-56 rounded-xl bg-white dark:bg-white-800 shadow-xl ring-1 ring-black/5 overflow-hidden"
+                    >
+                      {services.map((item, i) => (
+                        <li key={i}>
+                          <Link
+                            to={item.link}
+                            className="block px-4 py-3 text-sm hover:bg-orange-100 dark:hover:bg-gray-700 hover:text-orange-600 transition"
+                          >
+                            {item.title}
+                          </Link>
+                        </li>
+                      ))}
+                    </motion.ul>
+                  )}
+                </li>
+              );
+            })}
           </ul>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Hamburger */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden text-2xl text-gray-700 dark:text-gray-200"
+            className="md:hidden text-2xl text-gray-800 dark:text-gray-200 z-20"
           >
             ☰
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
-      {menuOpen && (
-        <div className="md:hidden bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-lg transition-colors duration-300">
-          <ul className="flex flex-col px-6 py-4 space-y-4 text-gray-700 dark:text-gray-200">
-            <li><Link to="/" className="hover:text-indigo-500 dark:hover:text-indigo-300 transition">Home</Link></li>
+      {/* MOBILE MENU */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className="md:hidden bg-white/90 dark:bg-white-900/90 backdrop-blur-md border-t border-white/20 relative"
+            drag="y"
+            dragConstraints={{ top: 0, bottom: 300 }}
+            dragElastic={0.2}
+            onDragEnd={(event, info) => {
+              if (info.offset.y < -50) setMenuOpen(false);
+            }}
+          >
+            <ul className="flex flex-col px-6 py-5 space-y-4 relative">
+              {/* Mobile bubble */}
+              <AnimatePresence>
+                {mobileHovered && (
+                  <motion.span
+                    layoutId="mobile-bubble"
+                    className="absolute left-0 right-0 h-10 bg-orange-500/80 rounded-full z-0"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                    style={{
+                      top: mobileHovered.offsetTop || 0,
+                    }}
+                  />
+                )}
+              </AnimatePresence>
 
-            <li>
-              <button
-                onClick={() => setServicesOpen(!servicesOpen)}
-                className="flex justify-between w-full"
-              >
-                Services <span>{servicesOpen ? "−" : "+"}</span>
-              </button>
-              {servicesOpen && (
-                <ul className="ml-4 mt-2 space-y-2 text-sm">
-                  {[{ title: "Digital Marketing", link: "/services#digital-marketing" },
-                    { title: "Web Development", link: "/services#web-development" },
-                    { title: "SEO", link: "/services#seo" }].map((item, i) => (
-                    <li key={i} className="hover:text-indigo-600 dark:hover:text-indigo-300 transition">
-                      <Link to={item.link}>{item.title}</Link>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
+              {links.map((link) => (
+                <li key={link.path}>
+                  {link.dropdown ? (
+                    <>
+                      <button
+                        onClick={() => setServicesOpen(!servicesOpen)}
+                        onMouseEnter={(e) => setMobileHovered(e.currentTarget)}
+                        onMouseLeave={() => setMobileHovered(null)}
+                        className="flex w-full justify-between font-medium relative z-10"
+                      >
+                        {link.name} <span>{servicesOpen ? "−" : "+"}</span>
+                      </button>
 
-            <li><Link to="/projectsboard" className="hover:text-indigo-500 dark:hover:text-indigo-300 transition">Projectsboard</Link></li>
-            <li><Link to="/blog" className="hover:text-indigo-500 dark:hover:text-indigo-300 transition">Blog</Link></li>
-            <li><Link to="/about" className="hover:text-indigo-500 dark:hover:text-indigo-300 transition">About</Link></li>
-            <li><Link to="/contact" className="hover:text-indigo-500 dark:hover:text-indigo-300 transition">Contact</Link></li>
-
-          </ul>
-        </div>
-      )}
+                      <AnimatePresence>
+                        {servicesOpen && (
+                          <motion.ul
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                            className="ml-4 mt-2 space-y-2 text-sm relative z-10"
+                          >
+                            {services.map((item) => (
+                              <motion.li
+                                key={item.link}
+                                onMouseEnter={(e) => setMobileHovered(e.currentTarget)}
+                                onMouseLeave={() => setMobileHovered(null)}
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                className="relative z-10"
+                              >
+                                <Link
+                                  to={item.link}
+                                  onClick={() => setMenuOpen(false)}
+                                  className="hover:text-orange-500 block"
+                                >
+                                  {item.title}
+                                </Link>
+                              </motion.li>
+                            ))}
+                          </motion.ul>
+                        )}
+                      </AnimatePresence>
+                    </>
+                  ) : (
+                    <motion.div
+                      whileTap={{ scale: 0.95 }}
+                      whileHover={{ scale: 1.03 }}
+                      onMouseEnter={(e) => setMobileHovered(e.currentTarget)}
+                      onMouseLeave={() => setMobileHovered(null)}
+                      className="relative z-10"
+                    >
+                      <Link
+                        to={link.path}
+                        onClick={() => setMenuOpen(false)}
+                        className="block font-medium"
+                      >
+                        {link.name}
+                      </Link>
+                    </motion.div>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 }

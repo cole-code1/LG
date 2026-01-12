@@ -1,8 +1,125 @@
+import { motion } from "framer-motion";
+import { FaStar } from "react-icons/fa"; // Small orange icon
 
-export default function Blog(){
+export default function Blog() {
+  const sections = [
+    {
+      title: "Introduction",
+      content: `
+        In today’s fast-moving digital world, having an online presence is essential.
+        Businesses that fail to adapt risk being left behind by competitors who
+        understand how to leverage technology, data, and user experience.
+      `,
+    },
+    {
+      title: "1. Why Digital Presence Matters",
+      content: `
+        Consumers research, compare, and make purchasing decisions online.
+        A strong digital presence allows your business to reach customers 24/7,
+        build trust, compete with larger companies, and generate consistent leads.
+      `,
+    },
+    {
+      title: "2. Digital Marketing: Turning Traffic into Customers",
+      content: `
+        Digital marketing is about understanding your audience and delivering
+        the right message at the right time. Social media, Google & Meta Ads,
+        and email campaigns are essential.
+      `,
+    },
+    {
+      title: "3. Web Development: Your Digital Foundation",
+      content: `
+        Your website is often the first impression users have of your brand.
+        A modern website should be fast, responsive, mobile-first, visually
+        appealing, and optimized for conversions.
+      `,
+    },
+    {
+      title: "4. SEO: Winning the Long-Term Game",
+      content: `
+        Search Engine Optimization (SEO) is one of the most powerful long-term
+        growth strategies. Technical SEO, on-page SEO, and content strategy
+        help you rank higher on Google and attract organic traffic.
+      `,
+    },
+    {
+      title: "5. Data, Analytics, and Continuous Improvement",
+      content: `
+        One of the biggest advantages of digital marketing is measurability.
+        Tools like Google Analytics and Search Console provide valuable insights
+        into user behavior and campaign performance. Businesses that succeed online
+        continuously analyze data and optimize based on results.
+      `,
+    },
+    {
+      title: "Conclusion",
+      content: `
+        Digital success requires strategy, consistency, and the right expertise.
+        Combining marketing, web development, and SEO practices builds a
+        powerful and sustainable online presence. The future belongs to brands
+        that invest in digital growth today.
+      `,
+    },
+  ];
 
-return(
-  <>
-  </>
-);
+  return (
+    <section className="relative pt-32 pb-20 bg-gradient-to-b from-[#FFF7ED] to-[#FFE8CC] min-h-screen overflow-hidden">
+      {/* Gradient overlay for depth */}
+      <div className="absolute top-0 left-0 w-full h-full pointer-events-none bg-gradient-to-tr from-[#FFD699] via-[#FFB870] to-[#FFCBA0] opacity-20"></div>
+
+      <div className="relative max-w-4xl mx-auto px-6 z-10">
+        {/* BLOG HEADER */}
+        <header className="mb-16 text-center">
+          <h1
+            className="text-5xl font-extrabold mb-4 text-white-500"
+            style={{ textShadow: "0 0 15px #fffcfa, 0 0 25px #000000" }}
+          >
+            The Ultimate Guide to Growing Your Business Online
+          </h1>
+          <p
+            className="text-gray-700 text-lg"
+            style={{ textShadow: "0 0 5px #FF9F43" }}
+          >
+            Digital marketing, web development, and SEO strategies that actually work
+          </p>
+        </header>
+
+        {/* BLOG CONTENT */}
+        {sections.map((section, index) => (
+          <motion.div
+            key={index}
+            className="mb-16"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: index * 0.1 }}
+          >
+            {/* Section Divider Icon */}
+            {index > 0 && (
+              <div className="flex justify-center mb-6">
+                <FaStar className="text-orange-400 text-xl animate-pulse" />
+              </div>
+            )}
+
+            <h2
+              className="text-3xl font-bold mb-4 text-orange-500"
+              style={{ textShadow: "0 0 10px #FF9F43, 0 0 20px #FFB870" }}
+            >
+              {section.title}
+            </h2>
+            <p
+              className="text-gray-800 text-lg leading-relaxed"
+              style={{ textShadow: "0 0 3px #FFAB6B" }}
+            >
+              {section.content}
+            </p>
+
+            {/* Section Gradient Divider */}
+            <div className="my-8 h-[2px] bg-gradient-to-r from-orange-300 via-orange-400 to-orange-300 rounded-full opacity-50"></div>
+          </motion.div>
+        ))}
+      </div>
+    </section>
+  );
 }

@@ -8,6 +8,8 @@ import Projectsboard from './pages/Projectsboard.jsx';
 import Blog from './pages/Blog.jsx';
 import Contact from './pages/Contact.jsx';
 import ScrollToHash from "./components/ScrollToHash";
+import ServiceRequest from "./pages/ServiceRequest";
+import { ServiceProvider } from "./context/ServiceContext";
 
 function App() {
 
@@ -16,16 +18,18 @@ function App() {
     <>
       <Navbar />
       <ScrollToHash />
+      <ServiceProvider>
       <Routes>
         <Route path='/' element={<Homepage />} />
         <Route path='/about' element={<About />} />
         <Route path='/services' element={<Services />} />
         <Route path='/projectsboard' element={<Projectsboard />} />
         <Route path='/blog' element={<Blog />} />
+        <Route path="/service-request" element={<ServiceRequest />} />
         <Route path='/contact' element={<Contact />} />
       </Routes>
+      </ServiceProvider>
       <Footer />
-   
     </>
   )
 }
