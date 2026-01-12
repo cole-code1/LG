@@ -28,7 +28,7 @@ export default function ServiceRequest() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:5000/api/send-email", {
+      const response = await fetch("https://lg-xg00.onrender.com/api/send-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
