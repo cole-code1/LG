@@ -36,6 +36,7 @@ PyJWT==2.10.1
 python-dotenv==1.1.1
 PyYAML==6.0.3
 requests==2.32.4
+resend==2.19.0
 responses==0.25.8
 schema==0.7.8
 setuptools==80.9.0

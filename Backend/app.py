@@ -1,19 +1,12 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
+import resend
 import os
 
 app = Flask(__name__)
 CORS(app)
 
-GMAIL_USER = os.getenv("GMAIL_USER")
-GMAIL_PASS = os.getenv("GMAIL_PASS")
-
-@app.route("/")
-def home():
-    return jsonify({"status": "Backend is running"}), 200
+resend.api_key = os.getenv("RESEND_API_KEY")
 
 @app.route("/api/send-email", methods=["POST"])
 def send_email():
@@ -27,34 +20,26 @@ def send_email():
     if not all([name, email, message, service]):
         return jsonify({"error": "Missing fields"}), 400
 
-    msg = MIMEMultipart()
-    msg["From"] = GMAIL_USER
-    msg["To"] = GMAIL_USER
-    msg["Subject"] = f"New Service Request: {service}"
+    resend.Emails.send({
+        "from": "LG Services <onboarding@resend.dev>",
+        "to": ["YOUR_EMAIL@gmail.com"],  # change this
+        "subject": f"New Service Request: {service}",
+        "html": f"""
+        <h3>New Service Request</h3>
+        <p><b>Service:</b> {service}</p>
+        <p><b>Name:</b> {name}</p>
+        <p><b>Email:</b> {email}</p>
+        <p><b>Message:</b><br>{message}</p>
+        """
+    })
 
-    body = f"""
-New service request received
+    return jsonify({"success": True}), 200
 
-Service: {service}
-Name: {name}
-Email: {email}
 
-Message:
-{message}
-"""
+@app.route("/")
+def home():
+    return {"status": "Backend running"}, 200
 
-    msg.attach(MIMEText(body, "plain"))
-
-    try:
-        server = smtplib.SMTP("smtp.gmail.com", 587)
-        server.starttls()
-        server.login(GMAIL_USER, GMAIL_PASS)
-        server.send_message(msg)
-        server.quit()
-        return jsonify({"success": True}), 200
-
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
