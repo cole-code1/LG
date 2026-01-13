@@ -11,6 +11,10 @@ CORS(app)
 GMAIL_USER = os.getenv("GMAIL_USER")
 GMAIL_PASS = os.getenv("GMAIL_PASS")
 
+@app.route("/")
+def home():
+    return jsonify({"status": "Backend is running"}), 200
+
 @app.route("/api/send-email", methods=["POST"])
 def send_email():
     data = request.get_json()
