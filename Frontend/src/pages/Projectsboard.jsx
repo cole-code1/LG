@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import FadeInSection from "../components/FadeInSection";
-import "./Home.css"; // Needed for glow-box styles
+import "./Home.css";
 
 // Example project images
 const Project1Img =
@@ -52,18 +52,20 @@ export default function Projectsboard() {
   };
 
   return (
-    <div className="min-h-screen bg-black py-16 px-6 sm:px-12">
+    <div className="min-h-screen py-16 px-6 sm:px-12" style={{ backgroundColor: "#ac9e9e" }}>
       {/* HEADER */}
       <FadeInSection>
         <h1
           className="text-4xl md:text-5xl font-extrabold mb-4 text-center text-black"
-          style={{ backgroundColor: "#ac9e9e",  textShadow: "0 0 6px rgba(249,115,22,0.4)" }}
+          style={{
+            textShadow: "0 0 6px rgba(249,115,22,0.4)",
+          }}
         >
           Projects Board
         </h1>
         <p
-          className="text-center text-gray-300 mb-8 max-w-4xl mx-auto"
-          style={{ textShadow: "0 0 6px rgba(249,115,22,0.2)" }}
+          className="text-center text-white mb-8 max-w-4xl mx-auto"
+         style={{ textShadow: "0 0 6px rgba(249,115,22,0.4)" }}
         >
           Explore our projects, filter by category or search by title. Click a card to view details.
         </p>
@@ -75,7 +77,7 @@ export default function Projectsboard() {
             placeholder="Search projects..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="px-4 py-2 rounded-lg border border-gray-700 bg-neutral-900 text-white w-full max-w-md focus:outline-none focus:ring-2 focus:ring-orange-400"
+            className="px-4 py-2 rounded-lg border border-gray-700 bg-white text-black w-full max-w-md focus:outline-none focus:ring-2 focus:ring-orange-400"
           />
         </div>
 
@@ -88,7 +90,7 @@ export default function Projectsboard() {
               className={`px-6 py-2 rounded-full font-semibold transition ${
                 filter === cat
                   ? "bg-orange-500 text-black"
-                  : "bg-neutral-900 text-gray-300 border border-gray-700 hover:bg-orange-100 hover:text-black"
+                  : "bg-white text-black border border-gray-700 hover:bg-orange-100 hover:text-black"
               }`}
             >
               {cat}
@@ -103,7 +105,7 @@ export default function Projectsboard() {
           <FadeInSection key={project.id}>
             <motion.div
               onMouseMove={handleMouseMove}
-              className="glow-box bg-neutral-900 rounded-2xl overflow-hidden cursor-pointer border border-gray-800"
+              className="glow-box bg-white rounded-2xl overflow-hidden cursor-pointer border border-gray-300"
               whileHover={{
                 y: -5,
                 scale: 1.03,
@@ -121,14 +123,14 @@ export default function Projectsboard() {
               </div>
               <div className="p-6">
                 <h2
-                  className="text-xl font-bold mb-2 text-orange-400"
+                  className="text-xl font-bold mb-2 text-orange-500"
                   style={{ textShadow: "0 0 6px rgba(249,115,22,0.4)" }}
                 >
                   {project.title}
                 </h2>
                 <p
-                  className="text-gray-300 mb-4"
-                  style={{ textShadow: "0 0 3px rgba(249,115,22,0.2)" }}
+                  className="text-white mb-4"
+                  style={{ textShadow: "0 0 6px rgba(249,115,22,0.4)" }}
                 >
                   {project.description}
                 </p>
@@ -157,12 +159,12 @@ export default function Projectsboard() {
           onClick={() => setModalProject(null)}
         >
           <div
-            className="bg-neutral-900 rounded-2xl max-w-lg w-full p-6 relative"
+            className="bg-white rounded-2xl max-w-lg w-full p-6 relative"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={() => setModalProject(null)}
-              className="absolute top-4 right-4 text-gray-300 hover:text-white font-bold text-xl"
+              className="absolute top-4 right-4 text-gray-700 hover:text-black font-bold text-xl"
             >
               &times;
             </button>
@@ -172,12 +174,14 @@ export default function Projectsboard() {
               className="w-full h-64 object-cover rounded-xl mb-4"
             />
             <h2
-              className="text-2xl font-bold mb-2 text-orange-400"
+              className="text-2xl font-bold mb-2 text-orange-500"
               style={{ textShadow: "0 0 6px rgba(249,115,22,0.4)" }}
             >
               {modalProject.title}
             </h2>
-            <p className="text-gray-300 mb-4">{modalProject.description}</p>
+            <p className="text-black mb-4" style={{ textShadow: "0 0 3px rgba(249,115,22,0.2)" }}>
+              {modalProject.description}
+            </p>
             <div className="flex flex-wrap gap-2 mb-4">
               {modalProject.tech.map((tech, idx) => (
                 <span

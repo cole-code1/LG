@@ -75,6 +75,7 @@ export default function Navbar() {
                       <motion.span
                         layoutId="nav-hover"
                         className="absolute inset-0 rounded-full bg-orange-400/20 backdrop-blur-sm"
+                        style={{ textShadow: "0 0 6px rgba(0, 0, 0, 0.4)" }}
                         initial={{ opacity: 0, scale: 0.85 }}
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.85 }}

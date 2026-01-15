@@ -24,12 +24,12 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6 py-24">
           <FadeInSection>
             <h1
-              className="text-4xl md:text-6xl font-bold mb-6"
+              className="text-4xl md:text-6xl font-bold mb-6" style={{textShadow: "0 0 6px rgba(249,115,22,0.4)"}}
             >
               Grow Your Business With Data-Driven Digital Marketing
             </h1>
             <p
-              className="max-w-2xl mx-auto mb-8 text-lg text-gray-300"
+              className="max-w-2xl mx-auto mb-8 text-lg text-white"
               style={{ textShadow: "0 0 6px rgba(249,115,22,0.4)" }}
             >
               We help brands generate leads, increase visibility, and scale revenue through SEO, web development, and performance marketing.
