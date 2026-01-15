@@ -8,8 +8,8 @@ import "./Home.css";
 
 // Images
 const DigitalMarketingImg = "https://res.cloudinary.com/daqtttdb0/image/upload/v1768241399/Marketing_o540uk.jpg";
-const WebDevelopmentImg = "https://res.cloudinary.com/daqtttdb0/image/upload/v1768241402/web-development_hci4yv.jpg;"
-const SEOImg = "https://res.cloudinary.com/daqtttdb0/image/upload/v1768241405/SEO_i4ndhf.jpg;"
+const WebDevelopmentImg = "https://res.cloudinary.com/daqtttdb0/image/upload/v1768241402/web-development_hci4yv.jpg";
+const SEOImg = "https://res.cloudinary.com/daqtttdb0/image/upload/v1768241405/SEO_i4ndhf.jpg";
 
 export default function ServicesPage() {
   const navigate = useNavigate();
@@ -31,12 +31,7 @@ export default function ServicesPage() {
         personalized email campaigns to maximize ROI. Conversion optimization ensures that every
         click brings value, helping your business grow sustainably.
       `,
-      features: [
-        "Social Media Marketing",
-        "Google & Meta Ads",
-        "Email Campaigns",
-        "Conversion Optimization",
-      ],
+      features: ["Social Media Marketing", "Google & Meta Ads", "Email Campaigns", "Conversion Optimization"],
       image: DigitalMarketingImg,
       buttonText: "Get Marketing Help",
     },
@@ -48,12 +43,7 @@ export default function ServicesPage() {
         landing pages to full e-commerce solutions and API integrations, we ensure your
         digital storefront is optimized for performance and conversions.
       `,
-      features: [
-        "React & Tailwind",
-        "Landing Pages",
-        "E-commerce Solutions",
-        "API Integrations",
-      ],
+      features: ["React & Tailwind", "Landing Pages", "E-commerce Solutions", "API Integrations"],
       image: WebDevelopmentImg,
       buttonText: "Build My Website",
     },
@@ -65,32 +55,27 @@ export default function ServicesPage() {
         on-page optimization to technical SEO and analytics reporting, we provide a
         comprehensive approach to long-term growth.
       `,
-      features: [
-        "Keyword Research",
-        "On-Page SEO",
-        "Technical SEO",
-        "Analytics & Reporting",
-      ],
+      features: ["Keyword Research", "On-Page SEO", "Technical SEO", "Analytics & Reporting"],
       image: SEOImg,
       buttonText: "Improve My Rankings",
     },
   ];
 
   return (
-    <section className="relative bg-gradient-to-b from-[#FFF7ED] to-[#FFE8CC] overflow-hidden">
+    <section className="relative bg-black overflow-hidden">
       {/* Header */}
       <section className="relative pt-32 pb-20 text-center">
         <OrangeParallaxBg />
         <div className="relative z-10 max-w-3xl mx-auto px-6">
           <h1
-            className="text-4xl md:text-5xl font-extrabold mb-4 text-white-500"
-            style={{ textShadow: "0 0 15px #ffffff, 0 0 25px #000000" }}
+            className="text-4xl md:text-5xl font-extrabold mb-4 text-white"
+            style={{ textShadow: "0 0 15px #f97316, 0 0 28px rgba(249,115,22,0.6)" }}
           >
             Our Services
           </h1>
           <p
-            className="text-lg md:text-xl text-white"
-            style={{ textShadow: "0 0 5px #111111" }}
+            className="text-lg md:text-xl text-gray-300"
+            style={{ textShadow: "0 0 5px #f97316" }}
           >
             We combine strategy, creativity, and technology to deliver digital solutions that
             transform businesses and engage audiences across the web.
@@ -101,11 +86,7 @@ export default function ServicesPage() {
       {/* Services Sections */}
       {services.map((service, index) => (
         <FadeInSection key={index}>
-          <section
-            className={`py-20 ${
-              index % 2 === 0 ? "bg-white" : "bg-gray-50"
-            }`}
-          >
+          <section className={`py-20 ${index % 2 === 0 ? "bg-black" : "bg-neutral-900"}`}>
             <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
               {/* Text */}
               <motion.div
@@ -126,19 +107,19 @@ export default function ServicesPage() {
                   {service.title}
                 </h2>
                 <p
-                  className="text-gray-800 text-lg mb-6 leading-relaxed"
+                  className="text-gray-300 text-lg mb-6 leading-relaxed"
                   style={{ textShadow: "0 0 3px #FFAB6B" }}
                 >
                   {service.content}
                 </p>
-                <ul className="space-y-2 text-gray-700 mb-6">
+                <ul className="space-y-2 text-gray-400 mb-6">
                   {service.features.map((feature, i) => (
                     <li key={i}>✔ {feature}</li>
                   ))}
                 </ul>
                 <button
                   onClick={() => handleServiceClick(service.title)}
-                  className="mt-6 bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg font-semibold transition"
+                  className="mt-6 bg-orange-500 hover:bg-orange-600 text-black px-6 py-3 rounded-lg font-semibold transition"
                 >
                   {service.buttonText}
                 </button>
@@ -162,18 +143,18 @@ export default function ServicesPage() {
 
       {/* CTA */}
       <FadeInSection>
-        <section className="relative py-20 text-white text-center overflow-hidden">
+        <section className="relative py-20 text-white text-center overflow-hidden bg-neutral-900">
           <OrangeParallaxBg />
           <div className="relative z-10 max-w-3xl mx-auto px-6">
             <h2
-              className="text-3xl md:text-4xl font-bold mb-4 text-black"
-              style={{ textShadow: "0 0 15px #ffffff, 0 0 25px #1a1a1a" }}
+              className="text-3xl md:text-4xl font-bold mb-4 text-orange-500"
+              style={{ textShadow: "0 0 15px #FF9F43, 0 0 25px #FFB870" }}
             >
               Let’s grow your business together
             </h2>
             <p
-              className="mb-6 text-white"
-              style={{ textShadow: "0 0 5px #000000" }}
+              className="mb-6 text-gray-300"
+              style={{ textShadow: "0 0 5px #FFAB6B" }}
             >
               Ready to start your next digital project? Contact us today and let’s create
               something extraordinary together.
@@ -181,7 +162,7 @@ export default function ServicesPage() {
 
             <Link
               to="/contact"
-              className="inline-block bg-white text-orange-600 px-8 py-3 rounded-lg font-semibold hover:bg-orange-100 transition"
+              className="inline-block bg-orange-500 text-black px-8 py-3 rounded-lg font-semibold hover:bg-orange-600 transition"
             >
               Contact Us
             </Link>

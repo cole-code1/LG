@@ -1,15 +1,14 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-const logo = "https://res.cloudinary.com/daqtttdb0/image/upload/v1768241458/Navy_and_White_Modern_Book_Club_Logo_20260107_171021_0000-removebg-preview_rj8yf3.png";
 
+const logo = "https://res.cloudinary.com/daqtttdb0/image/upload/v1768241458/Navy_and_White_Modern_Book_Club_Logo_20260107_171021_0000-removebg-preview_rj8yf3.png";
 
 export default function Navbar() {
   const location = useLocation();
   const [hovered, setHovered] = useState(null);
   const [servicesOpen, setServicesOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [mobileHovered, setMobileHovered] = useState(null);
 
   const links = [
     { name: "Home", path: "/" },
@@ -26,21 +25,18 @@ export default function Navbar() {
     { title: "SEO", link: "/services#seo" },
   ];
 
-  // Auto-close mobile menu on route change
   useEffect(() => {
     setMenuOpen(false);
     setServicesOpen(false);
-    setMobileHovered(null);
   }, [location]);
 
   return (
-    <nav className="fixed top-0 w-full z-50 bg-white/70 dark:bg-gray-900/60 backdrop-blur-md border-b border-white/30 dark:border-white/10">
+    <nav className="fixed top-0 w-full z-50 bg-white/10 backdrop-blur-md border-b border-white/20">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex h-16 items-center justify-between">
-
           {/* Logo */}
           <Link to="/" className="flex items-center">
-            <img src={logo} alt="Logo" className="h-25 w-auto" />
+            <img src={logo} alt="Logo" className="h-23 w-24" />
           </Link>
 
           {/* Desktop Menu */}
@@ -68,7 +64,7 @@ export default function Navbar() {
                   {isActive && (
                     <motion.span
                       layoutId="nav-bubble"
-                      className="absolute inset-0 rounded-full bg-orange-500"
+                      className="absolute inset-0 rounded-full bg-orange-500/30 backdrop-blur-sm"
                       transition={{ type: "spring", stiffness: 500, damping: 30 }}
                     />
                   )}
@@ -78,7 +74,7 @@ export default function Navbar() {
                     {hovered === link.path && !isActive && (
                       <motion.span
                         layoutId="nav-hover"
-                        className="absolute inset-0 rounded-full bg-orange-400/90 blur-md"
+                        className="absolute inset-0 rounded-full bg-orange-400/20 backdrop-blur-sm"
                         initial={{ opacity: 0, scale: 0.85 }}
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0, scale: 0.85 }}
@@ -89,7 +85,7 @@ export default function Navbar() {
 
                   <Link
                     to={link.path}
-                    className="relative z-10 px-5 py-2 font-medium text-gray-800 dark:text-gray-200 hover:text-white transition-colors"
+                    className="relative z-10 px-5 py-2 font-medium text-white hover:text-orange-400 transition-colors"
                   >
                     {link.name}
                   </Link>
@@ -101,13 +97,13 @@ export default function Navbar() {
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 10, scale: 0.95 }}
                       transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                      className="absolute left-0 mt-3 w-56 rounded-xl bg-white dark:bg-white-800 shadow-xl ring-1 ring-black/5 overflow-hidden"
+                      className="absolute left-0 mt-3 w-56 rounded-xl bg-white/10 backdrop-blur-md shadow-xl ring-1 ring-white/20 overflow-hidden"
                     >
                       {services.map((item, i) => (
                         <li key={i}>
                           <Link
                             to={item.link}
-                            className="block px-4 py-3 text-sm hover:bg-orange-100 dark:hover:bg-gray-700 hover:text-orange-600 transition"
+                            className="block px-4 py-3 text-sm text-white hover:text-black hover:bg-orange-400/40 transition"
                           >
                             {item.title}
                           </Link>
@@ -123,7 +119,7 @@ export default function Navbar() {
           {/* Mobile Hamburger */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden text-2xl text-gray-800 dark:text-gray-200 z-20"
+            className="md:hidden text-2xl text-white z-20"
           >
             ☰
           </button>
@@ -138,41 +134,16 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden bg-white/90 dark:bg-white-900/90 backdrop-blur-md border-t border-white/20 relative"
-            drag="y"
-            dragConstraints={{ top: 0, bottom: 300 }}
-            dragElastic={0.2}
-            onDragEnd={(event, info) => {
-              if (info.offset.y < -50) setMenuOpen(false);
-            }}
+            className="md:hidden bg-white/10 backdrop-blur-md border-t border-white/20 relative"
           >
             <ul className="flex flex-col px-6 py-5 space-y-4 relative">
-              {/* Mobile bubble */}
-              <AnimatePresence>
-                {mobileHovered && (
-                  <motion.span
-                    layoutId="mobile-bubble"
-                    className="absolute left-0 right-0 h-10 bg-orange-500/80 rounded-full z-0"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.8 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                    style={{
-                      top: mobileHovered.offsetTop || 0,
-                    }}
-                  />
-                )}
-              </AnimatePresence>
-
               {links.map((link) => (
                 <li key={link.path}>
                   {link.dropdown ? (
                     <>
                       <button
                         onClick={() => setServicesOpen(!servicesOpen)}
-                        onMouseEnter={(e) => setMobileHovered(e.currentTarget)}
-                        onMouseLeave={() => setMobileHovered(null)}
-                        className="flex w-full justify-between font-medium relative z-10"
+                        className="flex w-full justify-between font-medium text-white hover:text-orange-400"
                       >
                         {link.name} <span>{servicesOpen ? "−" : "+"}</span>
                       </button>
@@ -184,21 +155,14 @@ export default function Navbar() {
                             animate={{ opacity: 1, height: "auto" }}
                             exit={{ opacity: 0, height: 0 }}
                             transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                            className="ml-4 mt-2 space-y-2 text-sm relative z-10"
+                            className="ml-4 mt-2 space-y-2 text-sm"
                           >
                             {services.map((item) => (
-                              <motion.li
-                                key={item.link}
-                                onMouseEnter={(e) => setMobileHovered(e.currentTarget)}
-                                onMouseLeave={() => setMobileHovered(null)}
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                                className="relative z-10"
-                              >
+                              <motion.li key={item.link}>
                                 <Link
                                   to={item.link}
                                   onClick={() => setMenuOpen(false)}
-                                  className="hover:text-orange-500 block"
+                                  className="hover:text-orange-400 block text-white"
                                 >
                                   {item.title}
                                 </Link>
@@ -209,21 +173,13 @@ export default function Navbar() {
                       </AnimatePresence>
                     </>
                   ) : (
-                    <motion.div
-                      whileTap={{ scale: 0.95 }}
-                      whileHover={{ scale: 1.03 }}
-                      onMouseEnter={(e) => setMobileHovered(e.currentTarget)}
-                      onMouseLeave={() => setMobileHovered(null)}
-                      className="relative z-10"
+                    <Link
+                      to={link.path}
+                      onClick={() => setMenuOpen(false)}
+                      className="block font-medium text-white hover:text-orange-400"
                     >
-                      <Link
-                        to={link.path}
-                        onClick={() => setMenuOpen(false)}
-                        className="block font-medium"
-                      >
-                        {link.name}
-                      </Link>
-                    </motion.div>
+                      {link.name}
+                    </Link>
                   )}
                 </li>
               ))}

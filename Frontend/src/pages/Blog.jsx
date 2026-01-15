@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import { FaStar } from "react-icons/fa"; // Small orange icon
+import { FaStar } from "react-icons/fa";
+import FadeInSection from "../components/FadeInSection";
 
 export default function Blog() {
   const sections = [
@@ -64,22 +65,31 @@ export default function Blog() {
   ];
 
   return (
-    <section className="relative pt-32 pb-20 bg-gradient-to-b from-[#FFF7ED] to-[#FFE8CC]  overflow-hidden">
-      {/* Gradient overlay for depth */}
-      <div className="absolute top-0 left-0 w-full h-full pointer-events-none bg-gradient-to-tr from-[#FFD699] via-[#FFB870] to-[#FFCBA0] opacity-20"></div>
+    <section className="relative pt-32 pb-20 overflow-hidden" 
+      style={{
+        backgroundColor: "#1a1a1a", // dark base
+        backgroundImage: "radial-gradient(circle at 30% 30%, rgba(255, 151, 22,0.05), transparent 70%), radial-gradient(circle at 70% 70%, rgba(249,115,22,0.05), transparent 70%)",
+      }}
+    >
+      {/* subtle parallax/glow overlay */}
+      <div className="absolute top-0 left-0 w-full h-full pointer-events-none"
+        style={{
+          background: "radial-gradient(circle, rgba(249,115,22,0.03) 0%, transparent 60%), radial-gradient(circle, rgba(255,151,22,0.02) 0%, transparent 70%)",
+        }}
+      ></div>
 
       <div className="relative max-w-4xl mx-auto px-6 z-10">
         {/* BLOG HEADER */}
         <header className="mb-16 text-center">
           <h1
-            className="text-5xl font-extrabold mb-4 text-white-500"
-            style={{ textShadow: "0 0 15px #fffcfa, 0 0 25px #000000" }}
+            className="text-4xl md:text-5xl font-extrabold mb-4 text-white"
+            style={{ textShadow: "0 0 15px #f97316, 0 0 28px rgba(249,115,22,0.6)" }}
           >
             The Ultimate Guide to Growing Your Business Online
           </h1>
           <p
-            className="text-gray-700 text-lg"
-            style={{ textShadow: "0 0 5px #FF9F43" }}
+            className="text-gray-300 text-lg sm:text-xl"
+            style={{ textShadow: "0 0 6px rgba(249,115,22,0.4)" }}
           >
             Digital marketing, web development, and SEO strategies that actually work
           </p>
@@ -87,37 +97,44 @@ export default function Blog() {
 
         {/* BLOG CONTENT */}
         {sections.map((section, index) => (
-          <motion.div
-            key={index}
-            className="mb-16"
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: index * 0.1 }}
-          >
-            {/* Section Divider Icon */}
-            {index > 0 && (
-              <div className="flex justify-center mb-6">
-                <FaStar className="text-orange-400 text-xl animate-pulse" />
-              </div>
-            )}
-
-            <h2
-              className="text-3xl font-bold mb-4 text-orange-500"
-              style={{ textShadow: "0 0 10px #FF9F43, 0 0 20px #FFB870" }}
+          <FadeInSection key={index}>
+            <motion.div
+              className="mb-16"
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
             >
-              {section.title}
-            </h2>
-            <p
-              className="text-gray-800 text-lg leading-relaxed"
-              style={{ textShadow: "0 0 3px #FFAB6B" }}
-            >
-              {section.content}
-            </p>
+              {/* Section Divider Icon */}
+              {index > 0 && (
+                <div className="flex justify-center mb-6">
+                  <FaStar className="text-orange-400 text-xl animate-pulse" />
+                </div>
+              )}
 
-            {/* Section Gradient Divider */}
-            <div className="my-8 h-[2px] bg-gradient-to-r from-orange-300 via-orange-400 to-orange-300 rounded-full opacity-50"></div>
-          </motion.div>
+              {/* Section Title */}
+              <h2
+                className="text-3xl font-bold mb-4 text-orange-500"
+                style={{
+                  textShadow:
+                    "0 0 10px #f97316, 0 0 20px rgba(249,115,22,0.5)",
+                }}
+              >
+                {section.title}
+              </h2>
+
+              {/* Section Content */}
+              <p
+                className="text-gray-300 text-lg leading-relaxed"
+                style={{ textShadow: "0 0 3px rgba(249,115,22,0.3)" }}
+              >
+                {section.content}
+              </p>
+
+              {/* Section Gradient Divider */}
+              <div className="my-8 h-[2px] bg-gradient-to-r from-orange-300 via-orange-400 to-orange-300 rounded-full opacity-50"></div>
+            </motion.div>
+          </FadeInSection>
         ))}
       </div>
     </section>

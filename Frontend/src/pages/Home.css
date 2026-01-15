@@ -1,14 +1,56 @@
-/* From Uiverse.io by catraco */
+/* ================= PAGE BACKGROUND ================= */
 .container-bg {
+  min-height: 100vh;
   width: 100%;
-  height: 100%;
-  background-image: linear-gradient(
-    5deg,
-    orange 50%,
-    orangered 60%,
-    orange 50%
+  background-color: #000;
+  background-image: radial-gradient(
+    circle at top,
+    rgba(249, 115, 22, 0.08),
+    transparent 60%
   );
-  background-color: orange;
-  background-size: 1em 1em;
-  background-repeat: space;
+}
+
+/* ================= CURSOR FOLLOW GLOW BOX ================= */
+.glow-box {
+  position: relative;
+  background: #0a0a0a;
+  border: 1px solid #262626;
+  border-radius: 16px;
+  padding: 2rem;
+  color: #fff;
+  overflow: hidden;
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.glow-box::before {
+  content: "";
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(
+    circle,
+    rgba(249, 115, 22, 0.35),
+    transparent 65%
+  );
+  transform: translate(-50%, -50%);
+  top: var(--y);
+  left: var(--x);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+
+.glow-box:hover::before {
+  opacity: 1;
+}
+
+.glow-box:hover {
+  border-color: #f97316;
+  transform: translateY(-4px);
+}
+
+/* Keep content above glow */
+.glow-box > * {
+  position: relative;
+  z-index: 2;
 }
