@@ -57,20 +57,13 @@ export default function ContactPage() {
   };
 
   return (
-    <section
-      className="relative pt-32 pb-20 min-h-screen overflow-hidden"
-      style={{
-        backgroundColor: "#1a1a1a",
-        backgroundImage:
-          "radial-gradient(circle at 30% 30%, rgba(255,151,22,0.03), transparent 70%), radial-gradient(circle at 70% 70%, rgba(249,115,22,0.03), transparent 70%)",
-      }}
-    >
-      {/* Subtle orange glow overlay */}
+    <section className="relative pt-32 pb-20 min-h-screen overflow-hidden" style={{ backgroundColor: "#ac9e9e" }}>
+      {/* subtle glow overlay */}
       <div
         className="absolute top-0 left-0 w-full h-full pointer-events-none"
         style={{
           background:
-            "radial-gradient(circle, rgba(249,115,22,0.02) 0%, transparent 60%), radial-gradient(circle, rgba(255,151,22,0.01) 0%, transparent 70%)",
+            "radial-gradient(circle, rgba(249,115,22,0.03) 0%, transparent 60%), radial-gradient(circle, rgba(255,151,22,0.02) 0%, transparent 70%)",
         }}
       ></div>
 
@@ -84,13 +77,13 @@ export default function ContactPage() {
           transition={{ duration: 0.6 }}
         >
           <h1
-            className="text-4xl md:text-5xl font-extrabold mb-4 text-center text-white"
-            style={{ textShadow: "0 0 15px #f97316, 0 0 28px rgba(249,115,22,0.6)" }}
+            className="text-4xl md:text-5xl font-extrabold mb-4 text-black"
+            style={{ textShadow: "0 0 6px rgba(249,115,22,0.5)" }}
           >
             Get in Touch
           </h1>
           <p
-            className="text-gray-300 text-lg md:text-xl"
+            className="text-white text-lg md:text-xl"
             style={{ textShadow: "0 0 6px rgba(249,115,22,0.4)" }}
           >
             We’d love to hear from you! Reach out via Instagram, email, or fill out the form below.
@@ -110,7 +103,7 @@ export default function ContactPage() {
               href={contact.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-4 p-6 bg-white/10 rounded-xl shadow-lg backdrop-blur-md cursor-pointer"
+              className="flex items-center justify-center gap-4 p-6 bg-black/20 rounded-2xl shadow-lg glow-box cursor-pointer"
               whileHover={{ scale: 1.05, rotate: 2 }}
               whileTap={{ scale: 0.95 }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
@@ -123,8 +116,8 @@ export default function ContactPage() {
                 {contact.icon}
               </motion.div>
               <span
-                className="text-lg md:text-xl font-semibold"
-                style={{ textShadow: "0 0 3px #FFAB6B" }}
+                className="text-lg md:text-xl font-semibold text-orange-400"
+                style={{ textShadow: "0 0 6px #f97316" }}
               >
                 {contact.name}
               </span>
@@ -149,7 +142,7 @@ export default function ContactPage() {
               placeholder="Your Name"
               value={formData.name}
               onChange={handleChange}
-              className="px-4 py-3 rounded-lg border border-white/20 bg-white/10 text-gray-300 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-400"
+              className="px-4 py-3 rounded-2xl border border-white/20 bg-black/20 text-gray-300 placeholder-black focus:outline-none focus:ring-2 focus:ring-orange-400"
               required
             />
             <input
@@ -158,7 +151,7 @@ export default function ContactPage() {
               placeholder="Your Email"
               value={formData.email}
               onChange={handleChange}
-              className="px-4 py-3 rounded-lg border border-white/20 bg-white/10 text-gray-300 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-400"
+              className="px-4 py-3 rounded-2xl border border-white/20 bg-black/20 text-gray-300 placeholder-black focus:outline-none focus:ring-2 focus:ring-orange-400"
               required
             />
             <textarea
@@ -166,12 +159,12 @@ export default function ContactPage() {
               placeholder="Your Message"
               value={formData.message}
               onChange={handleChange}
-              className="px-4 py-3 rounded-lg border border-white/20 bg-white/10 text-gray-300 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-400 resize-none h-32"
+              className="px-4 py-3 rounded-2xl border border-white/20 bg-black/20 text-gray-300 placeholder-black focus:outline-none focus:ring-2 focus:ring-orange-400 resize-none h-32"
               required
             />
             <button
               type="submit"
-              className="mt-2 bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg font-semibold transition"
+              className="mt-2 bg-orange-500 hover:bg-orange-600 text-black px-6 py-3 rounded-2xl font-semibold transition"
             >
               Send Message
             </button>
