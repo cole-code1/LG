@@ -57,7 +57,7 @@ export default function Projectsboard() {
       <FadeInSection>
         <h1
           className="text-4xl md:text-5xl font-extrabold mb-4 text-center text-black"
-          style={{ backgroundColor: "#ac9e9e", padding: "1rem", borderRadius: "1rem", textShadow: "0 0 6px rgba(249,115,22,0.4)" }}
+          style={{ backgroundColor: "#ac9e9e",  textShadow: "0 0 6px rgba(249,115,22,0.4)" }}
         >
           Projects Board
         </h1>
