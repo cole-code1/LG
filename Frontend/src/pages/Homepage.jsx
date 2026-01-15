@@ -51,7 +51,7 @@ export default function Home() {
       <section className="py-20 bg-black">
         <div className="max-w-7xl mx-auto px-6">
           <FadeInSection>
-            <h2 className="text-3xl font-bold text-center mb-12" style={{ textShadow: "0 0 10px #f97316" }}>
+            <h2 className="text-3xl font-bold text-center mb-12 text-white">
               Our Services
             </h2>
           </FadeInSection>
@@ -77,7 +77,7 @@ export default function Home() {
       <section className="py-20 bg-neutral-950">
         <div className="max-w-7xl mx-auto px-6">
           <FadeInSection>
-            <h2 className="text-3xl font-bold text-center mb-12" style={{ textShadow: "0 0 10px #f97316" }}>
+            <h2 className="text-3xl font-bold text-center mb-12 text-white">
               Why Choose Us
             </h2>
           </FadeInSection>
@@ -103,7 +103,7 @@ export default function Home() {
       <section className="py-20 bg-black">
         <div className="max-w-7xl mx-auto px-6">
           <FadeInSection>
-            <h2 className="text-3xl font-bold text-center mb-12" style={{ textShadow: "0 0 10px #f97316" }}>
+            <h2 className="text-3xl font-bold text-center mb-12 text-white">
               How We Work
             </h2>
           </FadeInSection>
@@ -146,10 +146,10 @@ export default function Home() {
       {/* ================= CTA ================= */}
       <section className="py-20  text-center" style={{backgroundColor: "#ac9e9e"}}>
         <FadeInSection>
-          <h2 className="text-3xl text-black font-bold mb-4" >
+          <h2 className="text-3xl text-black font-bold mb-4" style={{ textShadow: "0 0 6px rgba(249,115,22,0.4)" }} >
             Ready to scale your business?
           </h2>
-          <p className="mb-6 " style={{ textShadow: "0 0 6px rgba(249,115,22,0.4)" }}>Let’s build something amazing together.</p>
+          <p className="mb-6 text-white" style={{ textShadow: "0 0 6px rgba(249,115,22,0.4)" }}>Let’s build something amazing together.</p>
           <Link className="bg-orange-500 text-black px-8 py-3 rounded-lg font-semibold hover:bg-orange-400 transition" to="/contact">
             Contact Us
           </Link>
