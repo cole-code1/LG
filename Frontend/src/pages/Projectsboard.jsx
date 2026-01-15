@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import FadeInSection from "../components/FadeInSection";
+import "./Home.css"; // Needed for glow-box styles
 
 // Example project images
 const Project1Img =
@@ -36,22 +37,34 @@ export default function Projectsboard() {
 
   const filteredProjects = projectsData.filter((project) => {
     const matchesCategory = filter === "All" || project.category === filter;
-    const matchesSearch = project.title.toLowerCase().includes(search.toLowerCase());
+    const matchesSearch = project.title
+      .toLowerCase()
+      .includes(search.toLowerCase());
     return matchesCategory && matchesSearch;
   });
+
+  // ================= HANDLE CURSOR GLOW =================
+  const handleMouseMove = (e) => {
+    const box = e.currentTarget;
+    const rect = box.getBoundingClientRect();
+    box.style.setProperty("--x", `${e.clientX - rect.left}px`);
+    box.style.setProperty("--y", `${e.clientY - rect.top}px`);
+  };
 
   return (
     <div className="min-h-screen bg-black py-16 px-6 sm:px-12">
       {/* HEADER */}
       <FadeInSection>
-  <h1
-            className="text-4xl md:text-5xl font-extrabold mb-4 text-center text-white"
-            style={{ textShadow: "0 0 15px #f97316, 0 0 28px rgba(249,115,22,0.6)" }}
->
-  Projects Board
-</h1>
-
-        <p className="text-center text-gray-300 mb-8 max-w-4xl mx-auto">
+        <h1
+          className="text-4xl md:text-5xl font-extrabold mb-4 text-center text-black"
+          style={{ backgroundColor: "#ac9e9e", padding: "1rem", borderRadius: "1rem", textShadow: "0 0 6px rgba(249,115,22,0.4)" }}
+        >
+          Projects Board
+        </h1>
+        <p
+          className="text-center text-gray-300 mb-8 max-w-4xl mx-auto"
+          style={{ textShadow: "0 0 6px rgba(249,115,22,0.2)" }}
+        >
           Explore our projects, filter by category or search by title. Click a card to view details.
         </p>
 
@@ -74,7 +87,7 @@ export default function Projectsboard() {
               onClick={() => setFilter(cat)}
               className={`px-6 py-2 rounded-full font-semibold transition ${
                 filter === cat
-                  ? "bg-orange-500 text-white"
+                  ? "bg-orange-500 text-black"
                   : "bg-neutral-900 text-gray-300 border border-gray-700 hover:bg-orange-100 hover:text-black"
               }`}
             >
@@ -89,9 +102,14 @@ export default function Projectsboard() {
         {filteredProjects.map((project) => (
           <FadeInSection key={project.id}>
             <motion.div
-              whileHover={{ y: -5, scale: 1.03, boxShadow: "0 0 20px rgba(255, 156, 43, 0.6)" }}
+              onMouseMove={handleMouseMove}
+              className="glow-box bg-neutral-900 rounded-2xl overflow-hidden cursor-pointer border border-gray-800"
+              whileHover={{
+                y: -5,
+                scale: 1.03,
+                boxShadow: "0 0 20px rgba(255, 156, 43, 0.6)",
+              }}
               transition={{ duration: 0.3 }}
-              className="bg-neutral-900 rounded-2xl overflow-hidden cursor-pointer border border-gray-800"
               onClick={() => setModalProject(project)}
             >
               <div className="relative overflow-hidden">
@@ -102,8 +120,18 @@ export default function Projectsboard() {
                 />
               </div>
               <div className="p-6">
-                <h2 className="text-xl font-bold mb-2 text-orange-500">{project.title}</h2>
-                <p className="text-gray-300 mb-4">{project.description}</p>
+                <h2
+                  className="text-xl font-bold mb-2 text-orange-400"
+                  style={{ textShadow: "0 0 6px rgba(249,115,22,0.4)" }}
+                >
+                  {project.title}
+                </h2>
+                <p
+                  className="text-gray-300 mb-4"
+                  style={{ textShadow: "0 0 3px rgba(249,115,22,0.2)" }}
+                >
+                  {project.description}
+                </p>
 
                 {/* Tech stack badges */}
                 <div className="flex flex-wrap gap-2">
@@ -143,7 +171,12 @@ export default function Projectsboard() {
               alt={modalProject.title}
               className="w-full h-64 object-cover rounded-xl mb-4"
             />
-            <h2 className="text-2xl font-bold mb-2 text-orange-500">{modalProject.title}</h2>
+            <h2
+              className="text-2xl font-bold mb-2 text-orange-400"
+              style={{ textShadow: "0 0 6px rgba(249,115,22,0.4)" }}
+            >
+              {modalProject.title}
+            </h2>
             <p className="text-gray-300 mb-4">{modalProject.description}</p>
             <div className="flex flex-wrap gap-2 mb-4">
               {modalProject.tech.map((tech, idx) => (

@@ -18,14 +18,13 @@ export default function Home() {
   };
 
   return (
-    <div className="bg-black text-white container-bg">
+    <div className="text-black container-bg" style={{ backgroundColor: "#ac9e9e" }}>
       {/* ================= HERO ================= */}
       <section className="pt-28 text-center relative z-10">
         <div className="max-w-7xl mx-auto px-6 py-24">
           <FadeInSection>
             <h1
               className="text-4xl md:text-6xl font-bold mb-6"
-              style={{ textShadow: "0 0 12px #f97316, 0 0 28px rgba(249,115,22,0.6)" }}
             >
               Grow Your Business With Data-Driven Digital Marketing
             </h1>
@@ -145,12 +144,12 @@ export default function Home() {
       </section>
 
       {/* ================= CTA ================= */}
-      <section className="py-20 bg-black text-center">
+      <section className="py-20  text-center" style={{backgroundColor: "#ac9e9e"}}>
         <FadeInSection>
-          <h2 className="text-3xl font-bold mb-4" style={{ textShadow: "0 0 18px #f97316, 0 0 30px rgba(249,115,22,0.7)" }}>
+          <h2 className="text-3xl text-black font-bold mb-4" >
             Ready to scale your business?
           </h2>
-          <p className="mb-6 text-gray-300">Let’s build something amazing together.</p>
+          <p className="mb-6 " style={{ textShadow: "0 0 6px rgba(249,115,22,0.4)" }}>Let’s build something amazing together.</p>
           <Link className="bg-orange-500 text-black px-8 py-3 rounded-lg font-semibold hover:bg-orange-400 transition" to="/contact">
             Contact Us
           </Link>
