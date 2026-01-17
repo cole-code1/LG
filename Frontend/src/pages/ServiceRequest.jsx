@@ -28,7 +28,7 @@ export default function ServiceRequest() {
     e.preventDefault();
     try {
       const response = await fetch(
-        "hhttps://lg-3-nugv.onrender.com/api/send-email",
+        "https://lg-3-nugv.onrender.com/api/send-email",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
