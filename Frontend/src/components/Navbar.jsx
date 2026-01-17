@@ -103,8 +103,8 @@ export default function Navbar() {
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 10, scale: 0.95 }}
                       transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                      className="absolute left-0 mt-3 w-56 rounded-xl shadow-xl ring-1 ring-white/20 overflow-hidden"
-                    >
+                      className="absolute top-full left-0 mt-2 w-48 bg-white backdrop-blur-md border border-white/20 rounded-lg shadow-lg overflow-hidden z-10"
+                     >
                       {services.map((item, i) => (
                         <li key={i}>
                           <Link
