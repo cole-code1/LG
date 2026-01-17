@@ -39,14 +39,14 @@ export default function ServiceRequest() {
       if (!response.ok) throw new Error("Failed to send request");
 
       toast.success("Request sent successfully!", {
-        position: "top-right",
+        position: "bottom-right",
         autoClose: 3000,
       });
 
       setFormData({ name: "", email: "", message: "" });
     } catch (err) {
       toast.error("Failed to send request. Try again.", {
-        position: "top-right",
+        position: "bottom-right",
       });
       console.error(err);
     }
