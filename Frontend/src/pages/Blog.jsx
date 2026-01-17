@@ -37,7 +37,7 @@ export default function Blog() {
   return (
     <section
       className="relative pt-32 pb-20 overflow-hidden"
-      style={{ backgroundColor: "#ac9e9e" }}// dark base
+      style={{ backgroundColor: "#ffffff" }}// dark base
     >
       {/* subtle glow overlay */}
       <div
@@ -52,14 +52,12 @@ export default function Blog() {
         {/* PAGE HEADER */}
         <header className="mb-16 text-center">
           <h1
-            className="text-4xl md:text-5xl font-extrabold mb-4 text-black"
- style={{ textShadow: "0 0 6px rgba(249,115,22,0.4)" }}
+            className="text-4xl md:text-5xl font-extrabold mb-4 text-orange-400"
           >
             The Ultimate Guide to Growing Your Business Online
           </h1>
           <p
-            className="text-white text-lg sm:text-xl"
-            style={{ textShadow: "0 0 6px rgba(249,115,22,0.4)" }}
+            className="text-black text-lg sm:text-xl"
           >
             Digital marketing, web development, and SEO strategies that actually work
           </p>
@@ -85,9 +83,6 @@ export default function Blog() {
               {/* Section Title */}
               <h2
                 className="text-3xl font-bold mb-4 text-orange-400"
-                style={{
-                  textShadow: "0 0 10px #f97316",
-                }}
               >
                 {section.title}
               </h2>
@@ -95,7 +90,6 @@ export default function Blog() {
               {/* Section Content */}
               <p
                 className="text-gray-300 text-lg leading-relaxed"
-                style={{ textShadow: "0 0 6px rgba(249,115,22,0.4)" }}
               >
                 {section.content}
               </p>

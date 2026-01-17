@@ -52,20 +52,17 @@ export default function Projectsboard() {
   };
 
   return (
-    <div className="min-h-screen py-16 px-6 sm:px-12" style={{ backgroundColor: "#ac9e9e" }}>
+    <div className="min-h-screen py-16 px-6 sm:px-12" style={{ backgroundColor: "#ffffff" }}>
       {/* HEADER */}
       <FadeInSection>
         <h1
-          className="text-4xl md:text-5xl font-extrabold mb-4 text-center text-black"
-          style={{
-            textShadow: "0 0 6px rgba(249,115,22,0.4)",
-          }}
+          className="text-4xl md:text-5xl font-extrabold mb-4 text-center text-orange-400"
         >
           Projects Board
         </h1>
         <p
-          className="text-center text-white mb-8 max-w-4xl mx-auto"
-         style={{ textShadow: "0 0 6px rgba(249,115,22,0.4)" }}
+          className="text-center text-black mb-8 max-w-4xl mx-auto"
+  
         >
           Explore our projects, filter by category or search by title. Click a card to view details.
         </p>
@@ -124,13 +121,11 @@ export default function Projectsboard() {
               <div className="p-6">
                 <h2
                   className="text-xl font-bold mb-2 text-orange-500"
-                  style={{ textShadow: "0 0 6px rgba(249,115,22,0.4)" }}
                 >
                   {project.title}
                 </h2>
                 <p
                   className="text-white mb-4"
-                  style={{ textShadow: "0 0 6px rgba(249,115,22,0.4)" }}
                 >
                   {project.description}
                 </p>

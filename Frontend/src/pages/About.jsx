@@ -23,7 +23,7 @@ export default function About() {
   ];
 
   return (
-    <section className="relative pt-32 pb-20 overflow-hidden"  style={{ backgroundColor: "#ac9e9e" }}>
+    <section className="relative pt-32 pb-20 overflow-hidden"  style={{ backgroundColor: "#ffffff" }}>
       {/* subtle glow overlay */}
       <div
         className="absolute top-0 left-0 w-full h-full pointer-events-none"
@@ -37,14 +37,13 @@ export default function About() {
         {/* PAGE HEADER */}
         <header className="mb-16 text-center">
           <h1
-            className="text-4xl md:text-5xl font-extrabold mb-4 text-black"
-style={{ textShadow: "0 0 6px rgba(249,115,22,0.4)" }}
+            className="text-4xl md:text-5xl font-extrabold mb-4 text-orange-400"
           >
             About Us
           </h1>
           <p
-            className="text-white text-lg sm:text-xl"
-             style={{ textShadow: "0 0 6px rgba(249,115,22,0.4)" }}
+            className="text-black text-lg sm:text-xl"
+             
           >
             Learn more about our story, mission, vision, and the team behind our success.
           </p>
@@ -70,9 +69,6 @@ style={{ textShadow: "0 0 6px rgba(249,115,22,0.4)" }}
               {/* Section Title */}
               <h2
                 className="text-3xl font-bold mb-4 text-orange-400"
-                style={{
-                  textShadow: "0 0 10px #f97316",
-                }}
               >
                 {section.title}
               </h2>
@@ -80,7 +76,6 @@ style={{ textShadow: "0 0 6px rgba(249,115,22,0.4)" }}
               {/* Section Content */}
               <p
                 className="text-gray-300 text-lg leading-relaxed"
-                style={{ textShadow: "0 0 6px rgba(249,115,22,0.4)" }}
               >
                 {section.content}
               </p>

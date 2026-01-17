@@ -20,9 +20,14 @@ export default function Navbar() {
   ];
 
   const services = [
-    { title: "Digital Marketing", link: "/services#digital-marketing" },
+    { title: "Social Marketing", link: "/services#social-marketing" },
     { title: "Web Development", link: "/services#web-development" },
     { title: "SEO", link: "/services#seo" },
+    { title: "Google Ads / PPC", link: "/services#google-ads" },
+    { title: "Content Marketing", link: "/services#content-marketing" },
+    { title: "Graphic Design", link: "/services#graphic-design" },
+    { title: "Website Maintenance", link: "/services#website-maintenance" },
+    { title: "Business Corporate Branding", link: "/services#business-branding" },
   ];
 
   useEffect(() => {
@@ -86,7 +91,7 @@ export default function Navbar() {
 
                   <Link
                     to={link.path}
-                    className="relative z-10 px-5 py-2 font-medium text-white hover:text-orange-400 transition-colors"
+                    className="relative z-10 px-5 py-2 font-medium text-black hover:text-orange-400 transition-colors"
                   >
                     {link.name}
                   </Link>
@@ -98,13 +103,13 @@ export default function Navbar() {
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 10, scale: 0.95 }}
                       transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                      className="absolute left-0 mt-3 w-56 rounded-xl bg-white/10 backdrop-blur-md shadow-xl ring-1 ring-white/20 overflow-hidden"
+                      className="absolute left-0 mt-3 w-56 rounded-xl shadow-xl ring-1 ring-white/20 overflow-hidden"
                     >
                       {services.map((item, i) => (
                         <li key={i}>
                           <Link
                             to={item.link}
-                            className="block px-4 py-3 text-sm text-white hover:text-black hover:bg-orange-400/40 transition"
+                            className="block px-4 py-3 text-sm text-black hover:text-black hover:bg-orange-400/40 transition"
                           >
                             {item.title}
                           </Link>
@@ -135,16 +140,16 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden bg-white/10 backdrop-blur-md border-t border-white/20 relative"
+            className="md:hidden bg-white/10 text-black border-t border-white/20 relative"
           >
-            <ul className="flex flex-col px-6 py-5 space-y-4 relative">
+            <ul className="flex flex-col px-6 py-5 space-y-4 relative text-black">
               {links.map((link) => (
                 <li key={link.path}>
                   {link.dropdown ? (
                     <>
                       <button
                         onClick={() => setServicesOpen(!servicesOpen)}
-                        className="flex w-full justify-between font-medium text-white hover:text-orange-400"
+                        className="flex w-full justify-between font-medium text-black hover:text-orange-400"
                       >
                         {link.name} <span>{servicesOpen ? "−" : "+"}</span>
                       </button>
@@ -163,7 +168,7 @@ export default function Navbar() {
                                 <Link
                                   to={item.link}
                                   onClick={() => setMenuOpen(false)}
-                                  className="hover:text-orange-400 block text-white"
+                                  className="hover:text-orange-400 block text-black"
                                 >
                                   {item.title}
                                 </Link>
@@ -177,7 +182,7 @@ export default function Navbar() {
                     <Link
                       to={link.path}
                       onClick={() => setMenuOpen(false)}
-                      className="block font-medium text-white hover:text-orange-400"
+                      className="block font-medium text-black hover:text-orange-400"
                     >
                       {link.name}
                     </Link>

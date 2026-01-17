@@ -57,7 +57,7 @@ export default function ContactPage() {
   };
 
   return (
-    <section className="relative pt-32 pb-20 min-h-screen overflow-hidden" style={{ backgroundColor: "#ac9e9e" }}>
+    <section className="relative pt-32 pb-20 min-h-screen overflow-hidden" style={{ backgroundColor: "#ffffff" }}>
       {/* subtle glow overlay */}
       <div
         className="absolute top-0 left-0 w-full h-full pointer-events-none"
@@ -77,14 +77,12 @@ export default function ContactPage() {
           transition={{ duration: 0.6 }}
         >
           <h1
-            className="text-4xl md:text-5xl font-extrabold mb-4 text-black"
-            style={{ textShadow: "0 0 6px rgba(249,115,22,0.5)" }}
+            className="text-4xl md:text-5xl font-extrabold mb-4 text-orange-400"
           >
             Get in Touch
           </h1>
           <p
-            className="text-white text-lg md:text-xl"
-            style={{ textShadow: "0 0 6px rgba(249,115,22,0.4)" }}
+            className="text-black text-lg md:text-xl"
           >
             We’d love to hear from you! Reach out via Instagram, email, or fill out the form below.
           </p>
@@ -117,7 +115,7 @@ export default function ContactPage() {
               </motion.div>
               <span
                 className="text-lg md:text-xl font-semibold text-orange-400"
-                style={{ textShadow: "0 0 6px #f97316" }}
+
               >
                 {contact.name}
               </span>

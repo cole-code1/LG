@@ -21,7 +21,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="text-white py-12" style={{ backgroundColor: "#ac9e9e" }}>
+    <footer className="text-white py-12" style={{ backgroundColor: "#ffffff" }}>
       <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
         
         {/* Logo & Text */}
@@ -36,7 +36,7 @@ export default function Footer() {
             <Link
               key={link.path}
               to={link.path}
-              className="text-white/70 hover:text-orange-400 transition-colors"
+              className="text-black/70 hover:text-orange-400 transition-colors"
             >
               {link.name}
             </Link>
