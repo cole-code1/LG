@@ -11,13 +11,13 @@ export default function ContactPage() {
     {
       name: "Instagram",
       icon: <Instagram size={28} />,
-      link: "https://instagram.com/yourusername",
+      link: "https://instagram.com/lg.marketinghub",
       color: "#FF6B81",
     },
     {
       name: "Email",
       icon: <Mail size={28} />,
-      link: "mailto:your@email.com",
+      link: "mailto:lg.marketinghub@gmail.com",
       color: "#FF6B5B",
     },
   ];

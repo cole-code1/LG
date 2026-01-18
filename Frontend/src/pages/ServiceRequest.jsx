@@ -74,8 +74,7 @@ export default function ServiceRequest() {
 
       <div className="relative max-w-xl mx-auto px-6 z-10">
         <motion.h1
-            className="text-4xl md:text-5xl font-extrabold mb-4 text-white"
-            style={{ textShadow: "0 0 15px #f97316, 0 0 28px rgba(249,115,22,0.6)" }}
+            className="text-4xl md:text-5xl font-extrabold mb-4 text-orange-400 text-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}

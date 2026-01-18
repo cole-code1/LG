@@ -198,7 +198,7 @@ export default function Home() {
             ].map((stat, index) => (
               <FadeInSection key={index}>
                 <div>
-                  <h3 className="text-4xl font-bold mb-2" style={{ textShadow: "0 0 12px #f97316" }}>
+                  <h3 className="text-4xl text-orange-400 font-bold mb-2" >
                     {stat.value}
                   </h3>
                   <p className="text-gray-400">{stat.label}</p>
