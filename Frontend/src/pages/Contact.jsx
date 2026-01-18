@@ -140,7 +140,7 @@ export default function ContactPage() {
               placeholder="Your Name"
               value={formData.name}
               onChange={handleChange}
-              className="px-4 py-3 rounded-2xl border border-white/20 bg-black/20 text-gray-300 placeholder-black focus:outline-none focus:ring-2 focus:ring-orange-400"
+              className="px-4 py-3 rounded-2xl border border-white/20 bg-black/20 text-white placeholder-black focus:outline-none focus:ring-2 focus:ring-orange-400"
               required
             />
             <input
@@ -149,7 +149,7 @@ export default function ContactPage() {
               placeholder="Your Email"
               value={formData.email}
               onChange={handleChange}
-              className="px-4 py-3 rounded-2xl border border-white/20 bg-black/20 text-gray-300 placeholder-black focus:outline-none focus:ring-2 focus:ring-orange-400"
+              className="px-4 py-3 rounded-2xl border border-white/20 bg-black/20 text-white placeholder-black focus:outline-none focus:ring-2 focus:ring-orange-400"
               required
             />
             <textarea
@@ -157,7 +157,7 @@ export default function ContactPage() {
               placeholder="Your Message"
               value={formData.message}
               onChange={handleChange}
-              className="px-4 py-3 rounded-2xl border border-white/20 bg-black/20 text-gray-300 placeholder-black focus:outline-none focus:ring-2 focus:ring-orange-400 resize-none h-32"
+              className="px-4 py-3 rounded-2xl border border-white/20 bg-black/20 text-white placeholder-black focus:outline-none focus:ring-2 focus:ring-orange-400 resize-none h-32"
               required
             />
             <button
