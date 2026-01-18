@@ -17,7 +17,7 @@ export default function ContactPage() {
     {
       name: "Email",
       icon: <Mail size={28} />,
-      link: "mailto:lg.marketinghub@gmail.com",
+      link: "mailto:lg.marketinghub@email.com",
       color: "#FF6B5B",
     },
   ];
