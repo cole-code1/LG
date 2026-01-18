@@ -14,12 +14,13 @@ export default function ContactPage() {
       link: "https://instagram.com/lg.marketinghub",
       color: "#FF6B81",
     },
-    {
-      name: "Email",
-      icon: <Mail size={28} />,
-      link: "mailto:lg.marketinghub@email.com",
-      color: "#FF6B5B",
-    },
+{
+  name: "Email",
+  icon: <Mail size={28} />,
+  link: "https://mail.google.com/mail/?view=cm&fs=1&to=lg.marketinghub@gmail.com",
+  color: "#FF6B5B",
+}
+
   ];
 
   const [formData, setFormData] = useState({
