@@ -5,8 +5,8 @@ import { motion } from "framer-motion";
 const logo = "https://res.cloudinary.com/daqtttdb0/image/upload/v1768241458/Navy_and_White_Modern_Book_Club_Logo_20260107_171021_0000-removebg-preview_rj8yf3.png";
 export default function Footer() {
   const socialLinks = [
-    { name: "Instagram", icon: <Instagram size={20} />, link: "https://instagram.com/yourusername", color: "#FF6B81" },
-    { name: "Email", icon: <Mail size={20} />, link: "mailto:your@email.com", color: "#FF6B5B" },
+    { name: "Instagram", icon: <Instagram size={20} />, link: "https://instagram.com/lg.marketinghub", color: "#FF6B81" },
+    { name: "Email", icon: <Mail size={20} />, link: "https://mail.google.com/mail/?view=cm&fs=1&to=lg.marketinghub@gmail.com", color: "#FF6B5B" },
     { name: "Facebook", icon: <Facebook size={20} />, link: "https://facebook.com", color: "#3b5998" },
     { name: "Twitter", icon: <Twitter size={20} />, link: "https://twitter.com", color: "#1da1f2" },
   ];
