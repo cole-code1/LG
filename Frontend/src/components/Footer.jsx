@@ -29,22 +29,21 @@ export default function Footer() {
         </div>
 
         {/* Navigation Links */}
-        <div>
-          <h1 className="text-black/70 font-bold mb-4">Quick Links</h1>
-          <div className="flex flex-wrap justify-center gap-4">
-            {links.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className="text-black/70 hover:text-orange-400 transition-colors"
-              >
-                {link.name}
-              </Link>
-            ))}
+        <h1>Quick Links</h1>
+        <div className="flex flex-wrap justify-center gap-4">
+          {links.map((link) => (
+            <Link
+              key={link.path}
+              to={link.path}
+              className="text-black/70 hover:text-orange-400 transition-colors"
+            >
+              {link.name}
+            </Link>
+          ))}
         </div>
 
         {/* Social Icons */}
-        <h1 className="text-black/70 font-bold mb-4">Follow Us</h1>
+        <h1>Follow Us</h1>
         <div className="flex gap-4">
           {socialLinks.map((social, i) => (
             <motion.a
