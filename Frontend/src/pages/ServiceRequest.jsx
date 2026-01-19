@@ -15,10 +15,16 @@ export default function ServiceRequest() {
     message: "",
   });
 
-  // Redirect if no service selected
-  useEffect(() => {
-    if (!selectedService) navigate("/services");
-  }, [selectedService, navigate]);
+// Redirect if no service selected
+useEffect(() => {
+  if (!selectedService) navigate("/services");
+}, [selectedService, navigate]);
+
+// FIX: scroll to top when page loads
+useEffect(() => {
+  window.scrollTo(0, 0);
+}, []);
+
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });

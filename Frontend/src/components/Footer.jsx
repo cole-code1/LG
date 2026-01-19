@@ -43,7 +43,7 @@ export default function Footer() {
         </div>
 
         {/* Social Icons */}
-        <h1 className="text-black">Follow Us</h1>
+        <h1 className="text-black ">Follow Us</h1>
         <div className="flex gap-4">
           {socialLinks.map((social, i) => (
             <motion.a
