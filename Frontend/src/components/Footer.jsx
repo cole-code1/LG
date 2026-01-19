@@ -7,8 +7,6 @@ export default function Footer() {
   const socialLinks = [
     { name: "Instagram", icon: <Instagram size={20} />, link: "https://instagram.com/lg.marketinghub", color: "#FF6B81" },
     { name: "Email", icon: <Mail size={20} />, link: "https://mail.google.com/mail/?view=cm&fs=1&to=lg.marketinghub@gmail.com", color: "#FF6B5B" },
-    { name: "Facebook", icon: <Facebook size={20} />, link: "https://facebook.com", color: "#3b5998" },
-    { name: "Twitter", icon: <Twitter size={20} />, link: "https://twitter.com", color: "#1da1f2" },
   ];
 
   const links = [
