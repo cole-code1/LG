@@ -29,7 +29,7 @@ export default function Footer() {
         </div>
 
         {/* Navigation Links */}
-        <h1>Quick Links</h1>
+        <h1 className="text-black">Quick Links</h1>
         <div className="flex flex-wrap justify-center gap-4">
           {links.map((link) => (
             <Link
@@ -43,7 +43,7 @@ export default function Footer() {
         </div>
 
         {/* Social Icons */}
-        <h1>Follow Us</h1>
+        <h1 className="text-black">Follow Us</h1>
         <div className="flex gap-4">
           {socialLinks.map((social, i) => (
             <motion.a
