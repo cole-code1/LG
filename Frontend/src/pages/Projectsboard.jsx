@@ -8,7 +8,20 @@ const Project1Img =
   "https://res.cloudinary.com/daqtttdb0/image/upload/v1768241514/Donex_vzsfsa.png";
 const Project3Img =
   "https://res.cloudinary.com/daqtttdb0/image/upload/v1768241505/portfolio_nivt72.png";
-
+const Project4Img =
+"https://res.cloudinary.com/daqtttdb0/image/upload/v1768896095/Orange_Modern_Non_Profit_Email_Header_1_bplmgk.png"
+const Project5Img =
+"https://res.cloudinary.com/daqtttdb0/image/upload/v1768896097/Orange_Modern_Africa_Connect_Icon_Logo_1_fygklu.png"
+const Project6Img =
+"https://res.cloudinary.com/daqtttdb0/image/upload/v1768896103/Grey_Modern_Kitchen_Set_Furniture_Instagram_Post_kvzzcr.png"
+const Project7Img =
+"https://res.cloudinary.com/daqtttdb0/image/upload/v1768896107/Black_and_White_Simple_Typographic_Product_Launch_Business_Instagram_Post_lqmrk2.png"
+const Project8Img =
+"https://res.cloudinary.com/daqtttdb0/image/upload/v1768897457/Copy_of_Copy_of_Copy_of_Simple_World_No_Tobacco_Day_Poster_iz1ii2.png"
+const Project9Img =
+"https://res.cloudinary.com/daqtttdb0/image/upload/v1768897447/Green_and_Red_Geometric_Community_Non-Profit_Logo-2_ggzpbu.png"
+const Project10Img =
+"https://res.cloudinary.com/daqtttdb0/image/upload/v1768897440/Beige_Organic_Event_Planner_Business_Card_od6get-2_uwst7n.png"
 export default function Projectsboard() {
   const projectsData = [
     {
@@ -27,13 +40,72 @@ export default function Projectsboard() {
       image: Project3Img,
       tech: ["React", "Framer Motion", "Tailwind"],
     },
+
+    {
+      id: 4,
+      title: "Non-Profit Email Header",
+      category: "Digital Marketing",
+      description: "Engaging email header design for non-profit campaigns.",
+      image: Project4Img,
+      tech: ["Canva", "Email Marketing"],
+    },
+    {
+      id: 5,
+      title: "Africa Connect Logo Design",
+      category: "Graphic Design",
+      description: "Vibrant logo design for Africa Connect initiative.",
+      image: Project5Img,
+      tech: ["Canva", "Branding"],
+    },
+    {
+      id: 6,
+      title: "Furniture Store Instagram Post",
+      category: "Digital Marketing",
+      description: "Eye-catching Instagram post for furniture promotions.",
+      image: Project6Img,
+      tech: ["Canva", "Social Media"],
+    },
+    {
+      id: 7,
+      title: "Product Launch Instagram Post",
+      category: "Digital Marketing",
+      description: "Sleek Instagram post design for product launches.",
+      image: Project7Img,
+      tech: ["Canva", "Social Media"],
+    },
+    {
+      id: 8,  
+      title: "No Tobacco Day Poster",
+      category: "Graphic Design",
+      description: "Informative poster design for No Tobacco Day awareness.",
+      image: Project8Img,
+      tech: ["Canva", "Graphic Design"],
+    },
+    {
+      id: 9,
+      title: "Community Non-Profit Logo",
+      category: "Graphic Design",
+      description: "Distinctive logo for community non-profit organization.",
+      image: Project9Img,
+      tech: ["Canva", "Branding"],
+    },
+    {
+      id: 10,
+      title: "Event Planner Business Card",
+      category: "Graphic Design",
+      description: "Professional business card design for event planners.",
+      image: Project10Img,
+      tech: ["Canva", "Graphic Design"],
+    },
   ];
+
+  
 
   const [filter, setFilter] = useState("All");
   const [search, setSearch] = useState("");
   const [modalProject, setModalProject] = useState(null);
 
-  const categories = ["All", "Web Development", "Digital Marketing", "SEO"];
+  const categories = ["All", "Web Development", "Digital Marketing", "SEO", "Graphic Design"];
 
   const filteredProjects = projectsData.filter((project) => {
     const matchesCategory = filter === "All" || project.category === filter;
