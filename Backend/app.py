@@ -22,7 +22,7 @@ def send_email():
 
     resend.Emails.send({
         "from": "LG Services <onboarding@resend.dev>",
-        "to": ["collinskathu313@gmail.com"],  # change this
+        "to": ["lg.marketinghub@gmail.com"],  # change this
         "subject": f"New Service Request: {service}",
         "html": f"""
         <h3>New Service Request</h3>
