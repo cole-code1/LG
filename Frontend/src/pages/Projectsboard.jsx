@@ -22,6 +22,8 @@ const Project9Img =
 "https://res.cloudinary.com/daqtttdb0/image/upload/v1768897447/Green_and_Red_Geometric_Community_Non-Profit_Logo-2_ggzpbu.png"
 const Project10Img =
 "https://res.cloudinary.com/daqtttdb0/image/upload/v1768897440/Beige_Organic_Event_Planner_Business_Card_od6get-2_uwst7n.png"
+const Project2Img =
+"https://res.cloudinary.com/daqtttdb0/image/upload/v1768989318/e-commerce_gvkmss.png"
 export default function Projectsboard() {
   const projectsData = [
     {
@@ -30,6 +32,14 @@ export default function Projectsboard() {
       category: "Web Development",
       description: "Modern donation platform with React and TailwindCSS.",
       image: Project1Img,
+      tech: ["React", "Tailwind", "Node.js"],
+    },
+    {
+      id: 2,
+      title: "E-commerce Website",
+      category: "Web Development",
+      description: "Full-featured online store with payment integration.",
+      image: Project2Img,
       tech: ["React", "Tailwind", "Node.js"],
     },
     {
@@ -105,7 +115,7 @@ export default function Projectsboard() {
   const [search, setSearch] = useState("");
   const [modalProject, setModalProject] = useState(null);
 
-  const categories = ["All", "Web Development", "Digital Marketing", "SEO", "Graphic Design"];
+  const categories = ["All", "Web Development", "Digital Marketing", "Graphic Design"];
 
   const filteredProjects = projectsData.filter((project) => {
     const matchesCategory = filter === "All" || project.category === filter;
