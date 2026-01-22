@@ -19,6 +19,11 @@ def send_email():
 
     if not all([name, email, message, service]):
         return jsonify({"error": "Missing fields"}), 400
+    if "@" not in email:
+        return jsonify({"error": "Invalid email address"}), 400
+    # i need letters not numbers
+    if not name.isalpha():
+        return jsonify({"error": "Name must contain only letters"}), 400
 
     resend.Emails.send({
         "from": "LG Services <onboarding@resend.dev>",
