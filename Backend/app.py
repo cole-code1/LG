@@ -25,6 +25,7 @@ def send_email():
         "to": ["lg.marketinghub@gmail.com"],  # change this
         "subject": f"New Service Request: {service}",
         "html": f"""
+        <img src="https://res.cloudinary.com/daqtttdb0/image/upload/v1768241458/Navy_and_White_Modern_Book_Club_Logo_20260107_171021_0000-removebg-preview_rj8yf3.png" alt="Company Logo" width="150"/>
         <h3>New Service Request</h3>
         <p><b>Service:</b> {service}</p>
         <p><b>Name:</b> {name}</p>
