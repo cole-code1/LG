@@ -34,7 +34,7 @@ useEffect(() => {
     e.preventDefault();
     try {
       const response = await fetch(
-        "https://lg-4.onrender.com/api/send-email",
+        "https://api.lgmarketinghub.co.ke/api/send-email",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

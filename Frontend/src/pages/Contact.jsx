@@ -37,7 +37,7 @@ export default function ContactPage() {
     e.preventDefault();
 
     try {
-      await fetch("https://lg-4.onrender.com/api/send-email", {
+      await fetch("https://api.lgmarketinghub.co.ke/api/send-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
