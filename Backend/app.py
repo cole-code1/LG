@@ -1,62 +1,152 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import resend
 import os
+import re
+import requests
 
+# ---------------------------
+# Flask App Initialization
+# ---------------------------
 app = Flask(__name__)
 
-# Allow requests from your frontend domain
-CORS(app, origins=["https://lgmarketinghub.co.ke"])
+CORS(
+    app,
+    resources={r"/api/*": {"origins": "https://lgmarketinghub.co.ke"}},
+    allow_headers=["Content-Type"],
+    methods=["POST"]
+)
 
-# Set Resend API key from environment variable
-resend.api_key = os.getenv("RESEND_API_KEY")
+# ---------------------------
+# Brevo Configuration
+# ---------------------------
+BREVO_API_KEY = os.environ.get("BREVO_API_KEY")
+BREVO_API_URL = "https://api.brevo.com/v3/smtp/email"
 
+SENDER_NAME = "LG Marketing Hub"
+SENDER_EMAIL = "support@lgmarketinghub.co.ke"     # MUST be verified in Brevo
+RECEIVER_EMAIL = "lg.marketinghub@gmail.com"      # Gmail is OK as receiver
+
+# ---------------------------
+# Health Check
+# ---------------------------
+@app.route("/")
+def health():
+    return jsonify({"status": "API OK"}), 200
+
+# ---------------------------
+# Send Email Endpoint
+# ---------------------------
 @app.route("/api/send-email", methods=["POST"])
 def send_email():
-    try:
-        data = request.get_json()
+    if not BREVO_API_KEY:
+        return jsonify({"error": "BREVO_API_KEY not loaded"}), 500
 
-        name = data.get("name", "").strip()
-        email = data.get("email", "").strip()
-        message = data.get("message", "").strip()
-        service = data.get("service", "").strip()
+    data = request.get_json(force=True)
 
-        # Validate fields
-        if not all([name, email, message, service]):
-            return jsonify({"error": "Missing fields"}), 400
+    name = data.get("name", "").strip()
+    email = data.get("email", "").strip()
+    message = data.get("message", "").strip()
+    service = data.get("service", "").strip()
 
-        if "@" not in email:
-            return jsonify({"error": "Invalid email address"}), 400
+    if not all([name, email, message, service]):
+        return jsonify({"error": "All fields are required"}), 400
 
-        # Allow letters and spaces in name
-        if not all(c.isalpha() or c.isspace() for c in name):
-            return jsonify({"error": "Name must contain only letters"}), 400
+    if not re.match(r"^[A-Za-z\s]{2,50}$", name):
+        return jsonify({"error": "Invalid name"}), 400
 
-        # Send email using Resend
-        resend.Emails.send({
-            "from": "LG Services <onboarding@resend.dev>",
-            "to": ["lg.marketinghub@gmail.com"],  # change if needed
-            "subject": f"New Service Request: {service}",
-            "html": f"""
-            <img src="https://res.cloudinary.com/daqtttdb0/image/upload/v1768241458/Navy_and_White_Modern_Book_Club_Logo_20260107_171021_0000-removebg-preview_rj8yf3.png" alt="Company Logo" width="150"/>
-            <h3>New Service Request</h3>
-            <p><b>Service:</b> {service}</p>
-            <p><b>Name:</b> {name}</p>
-            <p><b>Email:</b> {email}</p>
-            <p><b>Message:</b><br>{message}</p>
-            """
-        })
+    if not re.match(r"[^@]+@[^@]+\.[^@]+", email):
+        return jsonify({"error": "Invalid email"}), 400
 
-        return jsonify({"success": True, "message": "Email sent successfully!"}), 200
+    payload = {
+        "sender": {
+            "name": SENDER_NAME,
+            "email": SENDER_EMAIL
+        },
+        "to": [{"email": RECEIVER_EMAIL}],
+        "replyTo": {
+            "email": email,
+            "name": name
+        },
+        "subject": f"New Service Request: {service}",
+        "htmlContent": f"""
+            <html>
+            <body>
+                <h2>New Service Request</h2>
+                <p><strong>Service:</strong> {service}</p>
+                <p><strong>Name:</strong> {name}</p>
+                <p><strong>Email:</strong> {email}</p>
+                <p><strong>Message:</strong><br>{message}</p>
+                <hr>
+                <p>
+                    LG Marketing Hub<br>
+                    <a href="https://lgmarketinghub.co.ke">
+                        https://lgmarketinghub.co.ke
+                    </a>
+                </p>
+            </body>
+            </html>
+        """,
+        "textContent": f"""
+New Service Request
 
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+Service: {service}
+Name: {name}
+Email: {email}
 
-# Simple health check endpoint
-@app.route("/")
-def home():
-    return jsonify({"status": "Backend running"}), 200
+Message:
+{message}
 
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+---
+LG Marketing Hub
+https://lgmarketinghub.co.ke
+        """
+    }
+
+    headers = {
+        "accept": "application/json",
+        "api-key": BREVO_API_KEY,
+        "content-type": "application/json"
+    }
+
+    r = requests.post(BREVO_API_URL, json=payload, headers=headers, timeout=10)
+
+    return jsonify({
+        "brevo_status": r.status_code,
+        "brevo_response": r.text
+    }), r.status_code
+
+
+# ---------------------------
+# DIRECT TEST ENDPOINT (IMPORTANT)
+# ---------------------------
+@app.route("/brevo-test")
+def brevo_test():
+    payload = {
+        "sender": {
+            "name": "LG Marketing Hub",
+            "email": "support@lgmarketinghub.co.ke"
+        },
+        "to": [{"email": "lg.marketinghub@gmail.com"}],
+        "subject": "Brevo Direct Test",
+        "htmlContent": "<p>This is a direct Brevo test email.</p>",
+        "textContent": "This is a direct Brevo test email."
+    }
+
+    headers = {
+        "accept": "application/json",
+        "api-key": BREVO_API_KEY,
+        "content-type": "application/json"
+    }
+
+    r = requests.post(BREVO_API_URL, json=payload, headers=headers)
+
+    return jsonify({
+        "status": r.status_code,
+        "response": r.text
+    })
+
+
+# ---------------------------
+# Passenger Entry Point
+# ---------------------------
+application = app

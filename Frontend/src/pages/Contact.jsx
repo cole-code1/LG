@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Instagram, Mail } from "lucide-react";
 import { FaStar } from "react-icons/fa";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Home.css";
 
@@ -14,13 +14,12 @@ export default function ContactPage() {
       link: "https://instagram.com/lg.marketinghub",
       color: "#FF6B81",
     },
-{
-  name: "Email",
-  icon: <Mail size={28} />,
-  link: "https://mail.google.com/mail/?view=cm&fs=1&to=lg.marketinghub@gmail.com",
-  color: "#FF6B5B",
-}
-
+    {
+      name: "Email",
+      icon: <Mail size={28} />,
+      link: "https://mail.google.com/mail/?view=cm&fs=1&to=lg.marketinghub@gmail.com",
+      color: "#FF6B5B",
+    },
   ];
 
   const [formData, setFormData] = useState({
@@ -29,36 +28,61 @@ export default function ContactPage() {
     message: "",
   });
 
+  const [loading, setLoading] = useState(false);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (loading) return;
+
+    setLoading(true);
 
     try {
-      await fetch("https://api.lgmarketinghub.co.ke/api/send-email", {
+      const res = await fetch("https://api.lgmarketinghub.co.ke/api/send-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
-      toast.success("Message sent successfully!", {
-        position: "top-right",
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to send message");
+      }
+
+      toast.success("Message sent successfully! 🎉",{
+        position: "bottom-right",
         autoClose: 3000,
+        className: "bg-orange-500 text-white",
       });
 
       setFormData({ name: "", email: "", message: "" });
     } catch (err) {
-      toast.error("Failed to send message. Try again.", {
-        position: "top-right",
-        autoClose: 3000,
-      });
+      toast.error("Failed to send message. Try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <section className="relative pt-32 pb-20 min-h-screen overflow-hidden" style={{ backgroundColor: "#ffffff" }}>
+    <section
+      className="relative pt-32 pb-20 min-h-screen overflow-hidden"
+      style={{ backgroundColor: "#ffffff" }}
+    >
+      {/* Toastify container (REQUIRED) */}
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        newestOnTop
+        closeOnClick
+        pauseOnHover
+        draggable
+        theme="colored"
+      />
+
       {/* subtle glow overlay */}
       <div
         className="absolute top-0 left-0 w-full h-full pointer-events-none"
@@ -66,7 +90,7 @@ export default function ContactPage() {
           background:
             "radial-gradient(circle, rgba(249,115,22,0.03) 0%, transparent 60%), radial-gradient(circle, rgba(255,151,22,0.02) 0%, transparent 70%)",
         }}
-      ></div>
+      />
 
       <div className="relative max-w-4xl mx-auto px-6 z-10">
         {/* Header */}
@@ -77,15 +101,12 @@ export default function ContactPage() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h1
-            className="text-4xl md:text-5xl font-extrabold mb-4 text-orange-400"
-          >
+          <h1 className="text-4xl md:text-5xl font-extrabold mb-4 text-orange-400">
             Get in Touch
           </h1>
-          <p
-            className="text-black text-lg md:text-xl"
-          >
-            We’d love to hear from you! Reach out via Instagram, email, or fill out the form below.
+          <p className="text-black text-lg md:text-xl">
+            We’d love to hear from you! Reach out via Instagram, email, or fill
+            out the form below.
           </p>
         </motion.header>
 
@@ -105,27 +126,22 @@ export default function ContactPage() {
               className="flex items-center justify-center gap-4 p-6 bg-black/20 rounded-2xl shadow-lg glow-box cursor-pointer"
               whileHover={{ scale: 1.05, rotate: 2 }}
               whileTap={{ scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
             >
               <motion.div
                 style={{ color: contact.color }}
                 whileHover={{ scale: 1.2, rotate: 10 }}
-                transition={{ type: "spring", stiffness: 300 }}
               >
                 {contact.icon}
               </motion.div>
-              <span
-                className="text-lg md:text-xl font-semibold text-orange-400"
-
-              >
+              <span className="text-lg md:text-xl font-semibold text-orange-400">
                 {contact.name}
               </span>
             </motion.a>
           ))}
         </section>
 
-        {/* Section Divider */}
-        <div className="my-12 h-[2px] bg-gradient-to-r from-orange-300 via-orange-400 to-orange-300 rounded-full opacity-50"></div>
+        {/* Divider */}
+        <div className="my-12 h-[2px] bg-gradient-to-r from-orange-300 via-orange-400 to-orange-300 rounded-full opacity-50" />
 
         {/* Contact Form */}
         <motion.section
@@ -144,6 +160,7 @@ export default function ContactPage() {
               className="px-4 py-3 rounded-2xl border border-white/20 bg-black/20 text-white placeholder-black focus:outline-none focus:ring-2 focus:ring-orange-400"
               required
             />
+
             <input
               name="email"
               type="email"
@@ -153,6 +170,7 @@ export default function ContactPage() {
               className="px-4 py-3 rounded-2xl border border-white/20 bg-black/20 text-white placeholder-black focus:outline-none focus:ring-2 focus:ring-orange-400"
               required
             />
+
             <textarea
               name="message"
               placeholder="Your Message"
@@ -161,11 +179,13 @@ export default function ContactPage() {
               className="px-4 py-3 rounded-2xl border border-white/20 bg-black/20 text-white placeholder-black focus:outline-none focus:ring-2 focus:ring-orange-400 resize-none h-32"
               required
             />
+
             <button
               type="submit"
-              className="mt-2 bg-orange-500 hover:bg-orange-600 text-black px-6 py-3 rounded-2xl font-semibold transition"
+              disabled={loading}
+              className="mt-2 bg-orange-500 hover:bg-orange-600 disabled:opacity-50 text-black px-6 py-3 rounded-2xl font-semibold transition"
             >
-              Send Message
+              {loading ? "Sending..." : "Send Message"}
             </button>
           </form>
         </motion.section>

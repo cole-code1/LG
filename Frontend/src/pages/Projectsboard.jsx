@@ -177,7 +177,7 @@ export default function Projectsboard() {
             onClick={() => setModalProject(project)}
             className="glow-box bg-white rounded-2xl overflow-hidden cursor-pointer border border-gray-300"
             whileHover={{
-              y: -8,
+              y: -8, 
               scale: 1.05,
               boxShadow: "0 0 25px rgba(249,115,22,0.6)",
             }}

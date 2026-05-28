@@ -10,7 +10,7 @@ export default function Home() {
         "Community Management",
         "Influencer Marketing",
         "Social Media Account Management",
-        "Social Media Analytics and Reporting"], link: "/services#social-marketing" },
+        "Social Media Analytics and Reporting"], link: "/services/social-marketing" },
     { title: "Web Development", desc: "Modern, fast & scalable websites", features: [
         "Website Design & Website Redesign",
         "Custom Website Development",
@@ -18,7 +18,7 @@ export default function Home() {
         "CMS and Portal Development",
         "Website Optimization & Website Security",
         "Website Maintenance and Support",
-        "Website Hosting and Domain Setup"], link: "/services#web-development" },
+        "Website Hosting and Domain Setup"], link: "/services/web-development" },
     { title: "SEO Optimization", desc: "Rank higher and grow organic traffic",
       features: ["Keyword Research and Mapping",
         "Competitors Analysis",
@@ -26,36 +26,36 @@ export default function Home() {
         "Local SEO & Technical SEO",
         "Links Audit and Building",
         "Website Speed Optimization",
-        "SEO Analytics and Reporting"], link: "/services#seo" },
+        "SEO Analytics and Reporting"], link: "/services/seo" },
     { title: "Google Ads / PPC Advertising", desc: "Data-driven ads that scale", features: ["Keyword Research & Ads Creation",
         "Google Ads Management",
         "FB & IG Ads Management",
         "Retargeting Campaigns",
-        "Ad Performance Analytics & Reporting"], link: "/services#google-ads" },
+        "Ad Performance Analytics & Reporting"], link: "/services/google-ads" },
 
     { title: "Content Marketing", desc: "Engage & convert with quality content", features: ["Content Strategy Development",
         "Blog Writing & Article Creation",
         "Website Copywriting",
         "Email Marketing Campaigns",
         "Content Distribution & Promotion",
-        "Content Performance Analytics & Reporting"], link: "/services#content-marketing" },
+        "Content Performance Analytics & Reporting"], link: "/services/content-marketing" },
 
     { title: "Graphic Design", desc: "Visuals that captivate and convert", features: ["Logo Design",
         "Brand Identity Development",
         "Web & App UI/UX Design",
         "Print & Digital Marketing Materials",
         "Design System Creation",
-        "Design Consultation & Strategy"], link: "/services#graphic-design" },
+        "Design Consultation & Strategy"], link: "/services/graphic-design" },
 
     { title: "Website Maintenance", desc: "Keep your site secure and up-to-date", features: ["Regular Software Updates",
         "Security Monitoring & Malware Removal",
-        "Content Updates & Edits"], link: "/services#website-maintenance" },
+        "Content Updates & Edits"], link: "/services/website-maintenance" },
 
     { title: "Business Corporate Branding", desc: "Business Corporate Branding services: Logo Design, Brand Identity Development, Corporate Stationery Design, Brand Guidelines Creation, Website Branding, Packaging Design and Brand Messaging.", features: ["Brand Strategy Development",
         "Brand Identity Design",
         "Brand Guidelines Creation",
         "Brand Messaging & Positioning",
-        "Brand Implementation & Management"], link: "/services#business-branding" }
+        "Brand Implementation & Management"], link: "/services/branding" }
   ];
 
   // ================= HANDLE CURSOR GLOW =================
@@ -67,9 +67,9 @@ export default function Home() {
   };
 
   return (
-    <div className="text-black container-bg" style={{ backgroundColor: "#ffffff" }}>
+    <div className="text-black container-bg bg-white" >
       {/* ================= HERO ================= */}
-      <section className="pt-28 text-center relative z-10">
+      <section className="pt-28 text-center bg-gradient-to-br from-white via-orange-50 to-zinc-100">
         <div className="max-w-7xl mx-auto px-6 py-24">
           <FadeInSection>
             <h1
@@ -84,7 +84,7 @@ export default function Home() {
             </p>
 
             <div className="flex justify-center gap-4 flex-wrap">
-              <Link className="bg-orange-500 text-black px-6 py-3 rounded-lg font-semibold hover:bg-orange-400 transition" to="/services">
+              <Link className="bg-orange-500 text-black px-6 py-3 rounded-lg font-semibold hover:bg-orange-400 transition" to="/service-request">
                 Get Started
               </Link>
               <Link className="border border-orange-500 text-orange-400 px-6 py-3 rounded-lg hover:bg-orange-500 hover:text-black transition" to="/projectsboard">
@@ -96,10 +96,11 @@ export default function Home() {
       </section>
 
       {/* ================= SERVICES ================= */}
-      <section className="py-20 bg-black">
+      <section className="py-20 bg-white">
+
         <div className="max-w-7xl mx-auto px-6">
           <FadeInSection>
-            <h2 className="text-3xl font-bold text-center mb-12 text-white">
+            <h2 className="text-3xl font-bold text-center mb-12 text-black">
               Our Services
             </h2>
           </FadeInSection>

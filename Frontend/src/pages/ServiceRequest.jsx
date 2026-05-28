@@ -17,7 +17,7 @@ export default function ServiceRequest() {
 
 // Redirect if no service selected
 useEffect(() => {
-  if (!selectedService) navigate("/services");
+  if (!selectedService) navigate("/service-request");
 }, [selectedService, navigate]);
 
 // FIX: scroll to top when page loads
@@ -47,6 +47,7 @@ useEffect(() => {
       toast.success("Request sent successfully!", {
         position: "bottom-right",
         autoClose: 3000,
+        className: "bg-orange-500 text-white",
       });
 
       setFormData({ name: "", email: "", message: "" });
@@ -64,7 +65,7 @@ useEffect(() => {
     <section
       className="relative pt-32 pb-20 min-h-screen overflow-hidden"
       style={{
-        backgroundColor: "#1a1a1a",
+        backgroundColor: "#2e2d2d",
         backgroundImage:
           "radial-gradient(circle at 30% 30%, rgba(255,151,22,0.03), transparent 70%), radial-gradient(circle at 70% 70%, rgba(249,115,22,0.03), transparent 70%)",
       }}
@@ -103,7 +104,7 @@ useEffect(() => {
             required
             value={formData.name}
             onChange={handleChange}
-            className="w-full border border-white/20 bg-white/10 text-gray-200 placeholder-gray-400 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400 transition"
+            className="w-full border border-white/20 bg-white/10 text-white placeholder-gray-400 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400 transition"
           />
 
           <input
@@ -113,7 +114,7 @@ useEffect(() => {
             required
             value={formData.email}
             onChange={handleChange}
-            className="w-full border border-white/20 bg-white/10 text-gray-200 placeholder-gray-400 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400 transition"
+            className="w-full border border-white/20 bg-white/10 text-white placeholder-gray-400 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400 transition"
           />
 
           <textarea
@@ -122,7 +123,7 @@ useEffect(() => {
             required
             value={formData.message}
             onChange={handleChange}
-            className="w-full border border-white/20 bg-white/10 text-gray-200 placeholder-gray-400 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400 resize-none h-32 transition"
+            className="w-full border border-white/20 bg-white/10 text-white placeholder-gray-400 px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400 resize-none h-32 transition"
           />
 
           <motion.button
