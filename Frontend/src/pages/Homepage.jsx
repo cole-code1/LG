@@ -57,6 +57,7 @@ export default function Home() {
         "Brand Messaging & Positioning",
         "Brand Implementation & Management"], link: "/services/branding" }
   ];
+  
 
   // ================= HANDLE CURSOR GLOW =================
   const handleMouseMove = (e) => {
