@@ -326,7 +326,7 @@ export default function Blog() {
         {/* ── Author Bio ── */}
         <FadeInSection>
           <div className={`rounded-2xl border p-6 mb-10 flex gap-5 items-start ${cardBg}`}>
-            <div className="w-14 h-14 rounded-full bg-gradient-to-br from-orange-400 to-orange-700 flex items-center justify-center text-white text-xl font-bold shrink-0">JM</div>
+            <div className="w-14 h-14 rounded-full bg-gradient-to-br from-orange-400 to-orange-700 flex items-center justify-center text-white text-xl font-bold shrink-0">LG</div>
             <div>
               <p className={`text-xs uppercase tracking-widest mb-1 ${mutedText}`}>Written by</p>
               <p className="text-lg font-extrabold text-orange-400">Linus Muiruri</p>
