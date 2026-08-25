@@ -1,8 +1,89 @@
 import { Link } from "react-router-dom";
 import FadeInSection from "../components/FadeInSection";
 import "./Home.css";
+import {
+  siGoogle,
+  siMeta,
+  siGithub,
+  siStripe,
+  siVercel,
+  siCloudflare,
+  siMongodb,
+  siFirebase,
+  siReact,
+  siNextdotjs,
+  siJavascript,
+  siTypescript,
+  siTailwindcss,
+  siNodedotjs,
+  siExpress,
+  siDocker,
+  siKubernetes,
+  siPostgresql,
+  siMysql,
+  siRedis,
+  siSupabase,
+  siPrisma,
+  siPython,
+  siDjango,
+  siPhp,
+  siLaravel,
+  siFlutter,
+  siAndroid,
+  siApple,
+  siGooglecloud,
+  siDigitalocean,
+  siNetlify,
+  siFigma,
+  siNotion,
+  siVite,
+  siExcalidraw,
+  siFlask
+} from "simple-icons";
 
 export default function Home() {
+  const logos = [
+  siGoogle,
+  siMeta,
+  siGithub,
+  siStripe,
+  siVercel,
+  siCloudflare,
+  siMongodb,
+  siFirebase,
+  siReact,
+  siNextdotjs,
+  siJavascript,
+  siTypescript,
+  siTailwindcss,
+  siNodedotjs,
+  siExpress,
+  siDocker,
+  siKubernetes,
+  siPostgresql,
+  siMysql,
+  siRedis,
+  siSupabase,
+  siPrisma,
+  siPython,
+  siDjango,
+  siPhp,
+  siLaravel,
+  siFlutter,
+  siAndroid,
+  siApple,
+  siGooglecloud,
+  siDigitalocean,
+  siNetlify,
+  siFigma,
+  siExcalidraw,
+  siTailwindcss,
+  siFlask,
+  siNotion,
+  siVite
+];
+const marqueeLogos = [...logos, ...logos];
+
   const services = [
     { title: "Social  Marketing", desc: "Ads, social media & conversion-focused campaigns", features: ["Social Media Strategy Development",
         "Content Creation and Curation",
@@ -141,31 +222,37 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ================= WHY CHOOSE US ================= */}
-      <section className="py-20 bg-neutral-950">
-        <div className="max-w-7xl mx-auto px-6">
-          <FadeInSection>
-            <h2 className="text-3xl font-bold text-center mb-12 text-white">
-              Why Choose Us
-            </h2>
-          </FadeInSection>
+{/* ================= TECHNOLOGIES WE BUILD WITH ================= */}
+<section className="py-20 bg-neutral-950 overflow-hidden">
+  <FadeInSection>
+    <h2 className="text-3xl font-bold text-center text-white mb-4">
+      Technologies We Build With
+    </h2>
+    <p className="text-center text-gray-400 mb-12">
+      Modern platforms and services powering our software solutions.
+    </p>
+  </FadeInSection>
 
-          <div className="grid md:grid-cols-3 gap-8 text-center">
-            {[
-              { title: "Results-Driven", desc: "We focus on ROI and measurable growth." },
-              { title: "Modern Technology", desc: "Built with fast, scalable, and secure tools." },
-              { title: "Transparent Process", desc: "Clear communication and real reporting." },
-            ].map((item, index) => (
-              <FadeInSection key={index}>
-                <div onMouseMove={handleMouseMove} className="glow-box">
-                  <h3 className="text-xl font-semibold mb-4 text-orange-400">{item.title}</h3>
-                  <p className="text-gray-400">{item.desc}</p>
-                </div>
-              </FadeInSection>
-            ))}
-          </div>
-        </div>
-      </section>
+ <div className="relative overflow-hidden">
+  <div className="flex animate-marquee items-center">
+    {marqueeLogos.map((logo, index) => (
+<div
+  key={index}
+  className="mx-12 flex items-center justify-center flex-shrink-0"
+>
+  <svg
+    role="img"
+    viewBox="0 0 24 24"
+    className="h-14 w-14 md:h-16 md:w-16 transition-transform duration-300 hover:scale-110"
+    fill={`#${logo.hex}`}
+  >
+    <path d={logo.path} />
+  </svg>
+</div>
+    ))}
+  </div>
+</div>
+</section>
 
       {/* ================= HOW IT WORKS ================= */}
       <section className="py-20 bg-black">
