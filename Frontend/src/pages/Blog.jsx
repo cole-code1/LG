@@ -1,445 +1,119 @@
-import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { FaStar, FaTwitter, FaLinkedin, FaFacebook, FaLink, FaBookmark, FaRegBookmark, FaMoon, FaSun, FaCheckCircle } from "react-icons/fa";
+import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
+import { FaCheckCircle, FaFacebook, FaLink, FaMoon, FaSun, FaTwitter, FaLinkedin } from "react-icons/fa";
 
-// ── Fade-in wrapper (replaces external FadeInSection) ──────────────────────
+const MotionDiv = motion.div;
+
+const internalLinks = {
+  digitalMarketing: "/service-request",
+  website: "/services/web-development",
+  content: "/services/content-marketing",
+  seo: "/services/seo",
+  branding: "/services/branding",
+  services: "/service-request",
+  contact: "/contact",
+};
+
+const articleSections = [
+  { id: "website-conversion", label: "01", title: "Your website isn't designed to convert visitors" },
+  { id: "content-purpose", label: "02", title: "You're creating content without a clear purpose" },
+  { id: "targeting", label: "03", title: "You're targeting everyone" },
+  { id: "connected-channels", label: "04", title: "Your social media and website are working separately" },
+  { id: "strategy", label: "05", title: "You're trying to solve a strategy problem by posting more" },
+];
+
+const tags = ["Digital Marketing", "SEO", "Website Marketing", "Lead Generation", "Kenya Business", "Content Marketing"];
+
 function FadeInSection({ children }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.6 }}
-    >
-      {children}
-    </motion.div>
-  );
+  return <MotionDiv initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>{children}</MotionDiv>;
 }
 
-// ── Data ───────────────────────────────────────────────────────────────────
-const sections = [
-  {
-    id: "intro",
-    label: "Introduction",
-    title: "Why digital presence matters more than ever",
-    content: `In today's fast-moving world, your online presence is often the first — and sometimes only — impression a potential customer has of your business. Consumers research, compare, and make purchasing decisions online before ever picking up a phone or walking into a store. Businesses that fail to adapt risk being invisible to their most valuable audience.`,
-    content2: `A strong digital presence doesn't just mean having a website. It means showing up consistently across search engines, social platforms, and email inboxes — with the right message, at the right moment, for the right person.`,
-    stats: [
-      { num: "81%", desc: "of buyers research online before purchasing" },
-      { num: "3.5B", desc: "Google searches happen every single day" },
-      { num: "4.7×", desc: "higher revenue growth for digitally mature firms" },
-    ],
-  },
-  {
-    id: "marketing",
-    label: "01 — Digital Marketing",
-    title: "Turning traffic into customers",
-    content: `Digital marketing is about understanding your audience deeply — and delivering the right message at exactly the right moment. Unlike traditional advertising, digital campaigns are measurable, targetable, and adjustable in real time.`,
-    quote: "The best marketing doesn't feel like marketing. It feels like the answer to a question your customer was already asking.",
-    content2: `Social media advertising on platforms like Meta and TikTok allows hyper-targeted campaigns based on demographics, interests, and behaviours. Google Ads puts you in front of people actively searching for what you offer. Email campaigns nurture leads who already know you exist.`,
-    tip: { icon: "💡", title: "Pro tip", body: "Start with one or two channels and master them before expanding. Spreading a modest budget across six platforms dilutes impact. Depth beats breadth, especially early on." },
-  },
-  {
-    id: "webdev",
-    label: "02 — Web Development",
-    title: "Your digital foundation",
-    content: `Your website is often the first impression users have of your brand — and first impressions take less than 50 milliseconds to form. A slow, cluttered, or outdated website doesn't just look bad; it actively costs you customers.`,
-    content2: `A modern website needs to be fast (under 2 seconds to load), fully responsive across every device, visually trustworthy, and — above all — designed to convert visitors into leads or buyers. Every element from your headline to your call-to-action button should serve that goal.`,
-    tip: { icon: "📱", title: "Mobile-first is non-negotiable", body: "Over 60% of all web traffic now comes from mobile devices. If your site isn't built mobile-first, you're already behind. Google also uses mobile performance as a primary ranking factor." },
-  },
-  {
-    id: "content",
-    label: "03 — Content Marketing",
-    title: "Building long-term authority",
-    content: `Content marketing is the practice of creating genuinely useful material — blog posts, guides, videos, podcasts — that attracts and educates your target audience. Unlike paid ads that stop the moment you stop paying, great content compounds in value over time.`,
-    quote: "Content is the currency of trust. Every useful thing you publish deposits goodwill into an account your competitors can't easily touch.",
-    content2: `A single well-researched article can drive thousands of visitors per month for years. The key is consistency and genuine usefulness — search engines and audiences alike reward depth and originality over templated fluff.`,
-    tip: { icon: "✍️", title: "Content strategy checklist", body: "Define your audience's top 10 questions. Write the most thorough, accurate answer to each. Update them every 12 months. That's a content strategy that works." },
-  },
-  {
-    id: "seo",
-    label: "04 — SEO",
-    title: "Winning the long-term game",
-    content: `Search Engine Optimisation is one of the most powerful long-term growth strategies available to any business. Done well, it puts your brand in front of people actively looking for exactly what you offer — for free, month after month.`,
-    content2: `SEO breaks down into three pillars: technical SEO (site speed, crawlability, structured data), on-page SEO (keyword strategy, content quality, internal linking), and off-page SEO (backlinks, brand mentions, authority building). You need all three working together.`,
-    stats: [
-      { num: "68%", desc: "of online experiences begin with a search engine" },
-      { num: "0.63%", desc: "of users click results on page 2 of Google" },
-    ],
-  },
-  {
-    id: "social",
-    label: "05 — Social Media",
-    title: "Community over follower count",
-    content: `It's tempting to chase follower counts as a vanity metric, but the businesses winning on social media are focused on something more valuable: genuine community. A 10,000-person audience that trusts you is worth far more than 500,000 passive followers.`,
-    content2: `Each platform has its own grammar. LinkedIn rewards professional insight. Instagram and TikTok favour authentic behind-the-scenes content. Choosing the right platform means going where your actual customers already spend time.`,
-    tip: { icon: "🤝", title: "Engagement over reach", body: "Reply to every comment in your first hour of posting. The algorithm rewards early engagement — and so do potential customers who see you're genuinely present and responsive." },
-  },
-  {
-    id: "analytics",
-    label: "06 — Analytics",
-    title: "Data, analytics, and continuous improvement",
-    content: `One of the biggest advantages digital marketing has over traditional advertising is measurability. Tools like Google Analytics 4, Search Console, and Meta Business Suite give you granular data on who's visiting, where they came from, and what they did next.`,
-    quote: "Without data, you're just another person with an opinion. With it, you're the one who gets to make the decisions.",
-    content2: `The businesses that succeed online don't just collect this data — they act on it. They run A/B tests, kill underperforming ad sets quickly, and double down on content that's already working.`,
-  },
-  {
-    id: "email",
-    label: "07 — Email Marketing",
-    title: "The channel you actually own",
-    content: `Social media reach can be cut overnight by an algorithm change. SEO rankings can shift after a Google update. But your email list? That's yours. The average email marketing ROI remains one of the highest of any digital channel — often cited at $36 for every $1 spent.`,
-    content2: `Effective email marketing means segmenting your list by behaviour and interest, sending genuinely valuable content rather than constant promotions, and using automation to deliver the right message at the right stage of the buyer journey.`,
-    tip: { icon: "📧", title: "Start simple", body: "A welcome sequence of 3–5 emails for new subscribers, a monthly value-packed newsletter, and an abandoned cart sequence — that's a complete email strategy for most small businesses." },
-  },
-];
-
-const relatedArticles = [
-  { title: "How to Build a Content Calendar That Actually Gets Used", tag: "Content", mins: 6 },
-  { title: "Google Analytics 4: A Plain-English Setup Guide", tag: "Analytics", mins: 8 },
-  { title: "The 10 Website Mistakes Costing You Customers Right Now", tag: "Web Dev", mins: 5 },
-];
-
-// ── Sub-components ─────────────────────────────────────────────────────────
-function StatGrid({ stats }) {
-  const cols = stats.length === 2 ? "grid-cols-2" : "grid-cols-3";
-  return (
-    <div className={`grid ${cols} gap-3 my-6`}>
-      {stats.map((s, i) => (
-        <div key={i} className="rounded-xl border border-orange-100 bg-orange-50 p-4 text-center">
-          <span className="block text-3xl font-extrabold text-orange-500 font-serif">{s.num}</span>
-          <span className="mt-1 block text-xs text-orange-700 leading-snug">{s.desc}</span>
-        </div>
-      ))}
-    </div>
-  );
+function ArticleLink({ href, children }) {
+  return <a href={href} className="font-semibold text-orange-500 underline decoration-orange-200 underline-offset-2 hover:text-orange-600">{children}</a>;
 }
 
-function PullQuote({ text }) {
-  return (
-    <blockquote className="border-l-4 border-orange-400 pl-5 my-6">
-      <p className="text-xl italic text-gray-700 leading-relaxed">"{text}"</p>
-    </blockquote>
-  );
+function BulletList({ items, dark }) {
+  return <ul className={`my-5 space-y-2 pl-6 text-base leading-relaxed ${dark ? "text-gray-300" : "text-gray-600"}`}>{items.map((item) => <li key={item} className="list-disc pl-1">{item}</li>)}</ul>;
 }
 
-function TipBox({ icon, title, body }) {
-  return (
-    <div className="rounded-xl bg-orange-50 border border-orange-100 px-5 py-4 my-6">
-      <p className="text-xs font-semibold text-orange-600 uppercase tracking-widest mb-2">{icon} {title}</p>
-      <p className="text-sm text-gray-600 leading-relaxed">{body}</p>
-    </div>
-  );
-}
-
-// ── Main Blog Component ────────────────────────────────────────────────────
 export default function Blog() {
   const [dark, setDark] = useState(false);
-  const [bookmarked, setBookmarked] = useState(false);
   const [copied, setCopied] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [email, setEmail] = useState("");
-  const [subscribed, setSubscribed] = useState(false);
   const [comment, setComment] = useState("");
   const [name, setName] = useState("");
-  const [comments, setComments] = useState([
-    { name: "Alex Rivera", text: "Incredibly actionable — bookmarked and shared with my whole team.", time: "2 days ago" },
-    { name: "Sarah K.", text: "The SEO section alone was worth the read. Thank you!", time: "1 day ago" },
-  ]);
+  const [comments, setComments] = useState([]);
   const articleRef = useRef(null);
 
-  // Reading progress
+  useEffect(() => {
+    document.title = "Why Your Business Isn't Getting Customers Online | LG Marketing Hub";
+    let description = document.querySelector('meta[name="description"]');
+    if (!description) {
+      description = document.createElement("meta");
+      description.name = "description";
+      document.head.appendChild(description);
+    }
+    description.content = "Not getting enough customers online? Discover 5 digital marketing problems businesses face and what to fix first to generate more enquiries.";
+  }, []);
+
   useEffect(() => {
     const onScroll = () => {
-      const el = articleRef.current;
-      if (!el) return;
-      const { top, height } = el.getBoundingClientRect();
-      const visible = Math.min(1, Math.max(0, (-top) / (height - window.innerHeight)));
-      setProgress(Math.round(visible * 100));
+      const element = articleRef.current;
+      if (!element) return;
+      const { top, height } = element.getBoundingClientRect();
+      const denominator = height - window.innerHeight;
+      setProgress(denominator > 0 ? Math.round(Math.min(1, Math.max(0, -top / denominator)) * 100) : 0);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(window.location.href).catch(() => {});
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
+  const cardBg = dark ? "bg-gray-900 border-gray-800" : "bg-white border-gray-100";
+  const mutedText = dark ? "text-gray-300" : "text-gray-600";
+  const inputCls = `w-full rounded-lg border px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-orange-300 ${dark ? "bg-gray-800 border-gray-700 text-gray-100 placeholder-gray-500" : "bg-gray-50 border-gray-200 text-gray-800 placeholder-gray-400"}`;
 
-  const handleSubscribe = (e) => {
-    e.preventDefault();
-    if (email) setSubscribed(true);
-  };
-
-  const handleComment = (e) => {
-    e.preventDefault();
+  const handleComment = (event) => {
+    event.preventDefault();
     if (!comment.trim() || !name.trim()) return;
-    setComments((prev) => [...prev, { name, text: comment, time: "Just now" }]);
+    setComments((current) => [...current, { name, text: comment }]);
     setComment("");
     setName("");
   };
 
-  const bg = dark ? "bg-gray-950 text-gray-100" : "bg-white text-gray-900";
-  const cardBg = dark ? "bg-gray-900 border-gray-800" : "bg-white border-gray-100";
-  const mutedText = dark ? "text-gray-400" : "text-gray-500";
-  const inputCls = `w-full rounded-lg border px-4 py-2.5 text-sm outline-none transition focus:ring-2 focus:ring-orange-300 ${dark ? "bg-gray-800 border-gray-700 text-gray-100 placeholder-gray-500" : "bg-gray-50 border-gray-200 text-gray-800 placeholder-gray-400"}`;
-
   return (
-    <div className={`min-h-screen transition-colors duration-300 ${bg}`}>
-      {/* ── Reading Progress Bar ── */}
-      <div className="fixed top-0 left-0 w-full z-50 h-1 bg-gray-200">
-        <motion.div
-          className="h-full bg-orange-400 origin-left"
-          style={{ scaleX: progress / 100 }}
-          transition={{ ease: "linear" }}
-        />
-      </div>
+    <div className={`min-h-screen transition-colors duration-300 ${dark ? "bg-gray-950 text-gray-100" : "bg-white text-gray-900"}`}>
+      <div className="fixed left-0 top-0 z-50 h-1 w-full bg-gray-200"><MotionDiv className="h-full origin-left bg-orange-400" style={{ scaleX: progress / 100 }} /></div>
+      <div className="fixed right-4 top-2 z-50 flex items-center gap-2"><span className={`rounded-full px-2 py-1 text-xs font-mono ${dark ? "bg-gray-800 text-orange-400" : "bg-orange-50 text-orange-600"}`}>{progress}% read</span><button onClick={() => setDark((value) => !value)} className={`rounded-full border p-2 ${dark ? "border-gray-700 bg-gray-800 text-yellow-400" : "border-gray-200 bg-white text-gray-600"}`} title="Toggle dark mode" aria-label="Toggle dark mode">{dark ? <FaSun size={14} /> : <FaMoon size={14} />}</button></div>
 
-      {/* ── Sticky Top Controls ── */}
-      <div className="fixed top-2 right-4 z-50 flex items-center gap-2">
-        <span className={`text-xs font-mono px-2 py-1 rounded-full ${dark ? "bg-gray-800 text-orange-400" : "bg-orange-50 text-orange-600"}`}>
-          {progress}% read
-        </span>
-        <button
-          onClick={() => setDark((d) => !d)}
-          className={`p-2 rounded-full border transition ${dark ? "bg-gray-800 border-gray-700 text-yellow-400" : "bg-white border-gray-200 text-gray-600"}`}
-          title="Toggle dark mode"
-        >
-          {dark ? <FaSun size={14} /> : <FaMoon size={14} />}
-        </button>
-      </div>
+      <main ref={articleRef} className="mx-auto max-w-3xl px-6 pb-24 pt-20">
+        <FadeInSection><header className="mb-10 text-center"><span className="mb-4 inline-block rounded-full border border-orange-100 bg-orange-50 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-orange-500">Digital Marketing</span><h1 className="mb-4 text-4xl font-extrabold leading-tight text-orange-400 md:text-5xl">Why Your Business Is Not Getting Enough Customers Online, And What to Fix First</h1><p className={`mb-6 text-lg italic ${mutedText}`}>A practical guide to digital marketing for businesses in Kenya.</p><div className="flex flex-wrap items-center justify-center gap-3 text-sm"><div className="flex items-center gap-3"><div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-orange-400 to-orange-700 text-sm font-bold text-white">LM</div><div className="text-left"><p className="font-semibold">LG Marketing Hub</p><p className={`text-xs ${mutedText}`}>SEO-Ready Website Blog</p></div></div><span className={mutedText}>·</span><span className={mutedText}>8 min read</span><span className={mutedText}>·</span><span className={mutedText}>Digital Marketing</span></div></header></FadeInSection>
 
-      <div ref={articleRef} className="max-w-3xl mx-auto px-6 pt-20 pb-24">
+        <FadeInSection><div className="mb-8 flex flex-wrap gap-2">{tags.map((tag) => <span key={tag} className={`rounded-full border px-3 py-1 text-xs ${dark ? "border-gray-700 text-gray-400" : "border-gray-200 text-gray-500"}`}>{tag}</span>)}</div></FadeInSection>
+        <FadeInSection><nav className={`mb-10 rounded-2xl border p-5 ${cardBg}`}><p className={`mb-3 text-xs font-semibold uppercase tracking-widest ${mutedText}`}>In this article</p><ol className="space-y-2">{articleSections.map((section) => <li key={section.id}><a href={`#${section.id}`} className={`flex gap-2 text-sm hover:text-orange-500 ${mutedText}`}><span className="w-6 shrink-0 text-orange-400">{section.label}</span>{section.title}</a></li>)}</ol></nav></FadeInSection>
 
-        {/* ── Header ── */}
-        <FadeInSection>
-          <header className="mb-10 text-center">
-            <span className="inline-block text-xs font-semibold tracking-widest uppercase text-orange-500 bg-orange-50 border border-orange-100 px-3 py-1 rounded-full mb-4">
-              Digital Growth
-            </span>
-            <h1 className="text-4xl md:text-5xl font-extrabold leading-tight mb-4 text-orange-400">
-              The Ultimate Guide to Growing Your Business Online
-            </h1>
-            <p className={`text-lg italic mb-6 ${mutedText}`}>
-              Digital marketing, web development, and SEO strategies that actually deliver results — not just traffic.
-            </p>
-            {/* Author + Meta */}
-            <div className="flex items-center justify-center gap-4 flex-wrap">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-orange-400 to-orange-700 flex items-center justify-center text-white text-sm font-bold">LM</div>
-                <div className="text-left">
-                  <p className="text-sm font-semibold">Linus Muiruri</p>
-                  <p className={`text-xs ${mutedText}`}>Digital Growth Strategist</p>
-                </div>
-              </div>
-              <span className={`text-lg ${mutedText}`}>·</span>
-              <span className={`text-sm ${mutedText}`}>⏱ 9 min read</span>
-              <span className={`text-lg ${mutedText}`}>·</span>
-              <span className={`text-sm ${mutedText}`}>📅 June 1, 2026</span>
-            </div>
-          </header>
-        </FadeInSection>
+        <FadeInSection><section className={`mb-10 rounded-2xl border p-6 ${cardBg}`}><p className={`mb-4 text-base leading-relaxed ${mutedText}`}>You can have a website. You can have an Instagram page. You can post consistently. You can even spend money on advertising.</p><p className={`mb-4 text-base leading-relaxed ${mutedText}`}>And still struggle to get enough customers online.</p><p className={`mb-4 text-base leading-relaxed ${mutedText}`}>For many businesses, the problem is not that they are doing nothing online. The problem is that the different parts of their digital marketing are not working together.</p><p className={`text-base leading-relaxed ${mutedText}`}>Your website, SEO, social media, content, branding and advertising should move a potential customer from <strong>Discovery → Interest → Trust → Action → Enquiry</strong>. If that journey is broken somewhere, you can generate plenty of attention without generating enough business.</p></section></FadeInSection>
 
-        {/* ── Tags ── */}
-        <FadeInSection>
-          <div className="flex flex-wrap gap-2 mb-8">
-            {["Digital Marketing","SEO","Web Development","Analytics","Growth Strategy","Content Marketing","Social Media","Email"].map((tag) => (
-              <span key={tag} className={`text-xs px-3 py-1 rounded-full border cursor-pointer transition hover:border-orange-400 hover:text-orange-500 ${dark ? "border-gray-700 text-gray-400" : "border-gray-200 text-gray-500"}`}>
-                {tag}
-              </span>
-            ))}
-          </div>
-        </FadeInSection>
+        <FadeInSection><section id="website-conversion" className={`mb-10 rounded-2xl border p-6 ${cardBg}`}><p className="mb-2 text-xs font-semibold uppercase tracking-widest text-orange-500">01</p><h2 className="mb-4 text-2xl font-extrabold text-orange-400">Your website isn't designed to convert visitors</h2><p className={`mb-4 leading-relaxed ${mutedText}`}>Your website is often one of the first places a potential customer goes after discovering your business. But having a website is not enough. A visitor should quickly understand what you offer, who you help, why they should choose you, and what they should do next.</p><BulletList dark={dark} items={["An unclear homepage headline", "Too many competing messages", "Weak calls to action", "Difficult-to-find contact information", "No enquiry form", "Poor mobile experience", "Service pages with very little useful information", "No customer proof or case studies", "A website that looks good but does not guide visitors toward action"]} /><p className={`leading-relaxed ${mutedText}`}>A website can look professional and still perform poorly as a sales tool. If your website needs improvement, explore our <ArticleLink href={internalLinks.website}>Website Design & Revamp Services</ArticleLink>. The objective is to make it easier for the right visitor to understand your offer and take the next step.</p></section></FadeInSection>
 
-        {/* ── Table of Contents ── */}
-        <FadeInSection>
-          <nav className={`rounded-2xl border p-5 mb-10 ${cardBg}`}>
-            <p className={`text-xs uppercase tracking-widest font-semibold mb-3 ${mutedText}`}>In this article</p>
-            <ol className="space-y-2">
-              {sections.map((s) => (
-                <li key={s.id}>
-                  <a href={`#${s.id}`} className={`text-sm flex items-center gap-2 hover:text-orange-500 transition ${mutedText}`}>
-                    <span className="text-xs w-6 shrink-0 text-orange-300">{s.label.split("—")[0].trim()}</span>
-                    {s.title}
-                  </a>
-                </li>
-              ))}
-            </ol>
-          </nav>
-        </FadeInSection>
+        <FadeInSection><section id="content-purpose" className={`mb-10 rounded-2xl border p-6 ${cardBg}`}><p className="mb-2 text-xs font-semibold uppercase tracking-widest text-orange-500">02</p><h2 className="mb-4 text-2xl font-extrabold text-orange-400">You're creating content without a clear purpose</h2><p className={`mb-4 leading-relaxed ${mutedText}`}>Instead of asking “What should we post today?”, ask “What does this piece of content need to accomplish?” Awareness content helps people discover your business. Educational content shows that you understand their problems. Trust content uses proof, results, testimonials, case studies or behind-the-scenes information. Consideration content explains why your solution may be right, while conversion content encourages someone to enquire, book, buy or contact you.</p><p className={`leading-relaxed ${mutedText}`}>If every post says “Buy our service”, your audience has little reason to engage. But if every post is educational with no path toward your services, people may consume your content without becoming customers. Build a content strategy where different pieces move people through different stages of the customer journey. Learn more about our <ArticleLink href={internalLinks.content}>Content Marketing & Content Creation Services</ArticleLink>.</p></section></FadeInSection>
 
-        {/* ── Sections ── */}
-        {sections.map((section, index) => (
-          <FadeInSection key={section.id}>
-            <section id={section.id} className={`mb-12 p-8 rounded-2xl border ${cardBg} ${dark ? "" : "shadow-sm"}`}>
-              {index > 0 && (
-                <div className="flex justify-center mb-5">
-                  <FaStar className="text-orange-300 text-base animate-pulse" />
-                </div>
-              )}
-              <p className="text-xs font-semibold tracking-widest uppercase text-orange-500 mb-2">{section.label}</p>
-              <h2 className="text-2xl font-extrabold mb-4 text-orange-400">{section.title}</h2>
-              <p className={`text-base leading-relaxed mb-4 ${mutedText}`}>{section.content}</p>
-              {section.quote && <PullQuote text={section.quote} />}
-              {section.content2 && <p className={`text-base leading-relaxed mb-4 ${mutedText}`}>{section.content2}</p>}
-              {section.stats && <StatGrid stats={section.stats} />}
-              {section.tip && <TipBox {...section.tip} />}
-              <div className="mt-6 h-px bg-gradient-to-r from-orange-200 via-orange-400 to-orange-200 opacity-40 rounded-full" />
-            </section>
-          </FadeInSection>
-        ))}
+        <FadeInSection><section id="targeting" className={`mb-10 rounded-2xl border p-6 ${cardBg}`}><p className="mb-2 text-xs font-semibold uppercase tracking-widest text-orange-500">03</p><h2 className="mb-4 text-2xl font-extrabold text-orange-400">You're targeting everyone</h2><p className={`mb-4 leading-relaxed ${mutedText}`}>“Businesses in Kenya” is too broad to be a complete marketing strategy. A hotel does not have the same marketing problems as a real estate company. A school does not have the same customer journey as a construction company, and a law firm does not communicate value in the same way as an e-commerce business.</p><BulletList dark={dark} items={["Who is our ideal customer?", "What problem are they trying to solve?", "What are they currently doing?", "What is stopping them from buying?", "Why should they choose us?", "What action do we want them to take?"]} /><p className={`leading-relaxed ${mutedText}`}>Marketing is not just about reaching more people. It is about reaching the right people with the right message. This is where a proper <ArticleLink href={internalLinks.digitalMarketing}>Digital Marketing Strategy</ArticleLink> becomes valuable.</p></section></FadeInSection>
 
-        {/* ── Conclusion ── */}
-        <FadeInSection>
-          <div className={`rounded-2xl border p-8 mb-12 ${cardBg}`}>
-            <h2 className="text-2xl font-extrabold text-orange-400 mb-3">The bottom line</h2>
-            <p className={`text-base leading-relaxed ${mutedText}`}>
-              Digital success doesn't require doing everything at once. It requires doing the right things consistently — a fast, trustworthy website, content that genuinely helps your audience, SEO that builds over time, and data that guides your decisions. The brands winning online aren't the ones with the biggest budgets. They're the ones that started building six months ago.
-            </p>
-          </div>
-        </FadeInSection>
+        <FadeInSection><section id="connected-channels" className={`mb-10 rounded-2xl border p-6 ${cardBg}`}><p className="mb-2 text-xs font-semibold uppercase tracking-widest text-orange-500">04</p><h2 className="mb-4 text-2xl font-extrabold text-orange-400">Your social media and website are working separately</h2><p className={`mb-4 leading-relaxed ${mutedText}`}>Imagine this customer journey: someone sees your Instagram Reel, becomes interested, visits your profile, clicks your website, reads a relevant service page, sees proof of your work, and contacts you. That is a connected marketing system.</p><p className={`leading-relaxed ${mutedText}`}>If the website is confusing, the offer is unclear, or there is no call to action, you generated attention but lost the opportunity. This is why your <ArticleLink href={internalLinks.seo}>SEO Services</ArticleLink>, website, social media and content strategy should support each other. Send people to a useful service page, blog article, case study, landing page, booking page, WhatsApp or enquiry form.</p></section></FadeInSection>
 
-        {/* ── Share Buttons ── */}
-        <FadeInSection>
-          <div className={`rounded-2xl border p-6 mb-10 ${cardBg}`}>
-            <p className={`text-sm font-semibold mb-3 ${mutedText}`}>Share this article</p>
-            <div className="flex flex-wrap gap-3">
-              {[
-                { icon: <FaTwitter />, label: "Share on X", href: "https://twitter.com/intent/tweet" },
-                { icon: <FaLinkedin />, label: "LinkedIn", href: "https://linkedin.com/sharing/share-offsite/" },
-                { icon: <FaFacebook />, label: "Facebook", href: "https://facebook.com/sharer/sharer.php" },
-              ].map((btn) => (
-                <a key={btn.label} href={btn.href} target="_blank" rel="noopener noreferrer"
-                  className={`inline-flex items-center gap-2 text-sm px-4 py-2 rounded-lg border transition hover:border-orange-400 hover:text-orange-500 ${dark ? "border-gray-700 text-gray-400" : "border-gray-200 text-gray-500"}`}>
-                  {btn.icon} {btn.label}
-                </a>
-              ))}
-              <button onClick={handleCopy}
-                className={`inline-flex items-center gap-2 text-sm px-4 py-2 rounded-lg border transition hover:border-orange-400 hover:text-orange-500 ${dark ? "border-gray-700 text-gray-400" : "border-gray-200 text-gray-500"}`}>
-                {copied ? <FaCheckCircle className="text-green-500" /> : <FaLink />}
-                {copied ? "Copied!" : "Copy link"}
-              </button>
-            </div>
-          </div>
-        </FadeInSection>
+        <FadeInSection><section id="strategy" className={`mb-10 rounded-2xl border p-6 ${cardBg}`}><p className="mb-2 text-xs font-semibold uppercase tracking-widest text-orange-500">05</p><h2 className="mb-4 text-2xl font-extrabold text-orange-400">You're trying to solve a strategy problem by posting more</h2><p className={`mb-4 leading-relaxed ${mutedText}`}>When marketing is not working, the first response is often: “We need to post more.” But more content does not automatically solve a broken marketing system. If your offer is unclear, your website does not convert, you are targeting the wrong audience, your content is not answering customer problems, or there is no clear conversion path, posting more will not fix it.</p><p className={`leading-relaxed ${mutedText}`}>Before increasing your posting frequency, look at the system behind your marketing: <strong>Audience → Message → Content → Destination → Conversion</strong>. Fix the bottleneck before simply producing more content.</p></section></FadeInSection>
 
-        {/* ── Author Bio ── */}
-        <FadeInSection>
-          <div className={`rounded-2xl border p-6 mb-10 flex gap-5 items-start ${cardBg}`}>
-            <div className="w-14 h-14 rounded-full bg-gradient-to-br from-orange-400 to-orange-700 flex items-center justify-center text-white text-xl font-bold shrink-0">LG</div>
-            <div>
-              <p className={`text-xs uppercase tracking-widest mb-1 ${mutedText}`}>Written by</p>
-              <p className="text-lg font-extrabold text-orange-400">Linus Muiruri</p>
-              <p className="text-xs text-orange-500 font-semibold mb-2">Digital Growth Strategist</p>
-              <p className={`text-sm leading-relaxed ${mutedText}`}>
-                Linus has spent 12 years helping small and mid-sized businesses build sustainable online growth through SEO, content strategy, and conversion-focused web design. When not deep in analytics dashboards, Linus writes about the intersection of technology and human behaviour.
-              </p>
-            </div>
-          </div>
-        </FadeInSection>
+        <FadeInSection><section className={`mb-10 rounded-2xl border p-8 ${cardBg}`}><h2 className="mb-5 text-2xl font-extrabold text-orange-400">So, what should your business fix first?</h2>{[["Step 1: Clarify your offer", "Make it immediately obvious what you do, who you help and what problem you solve."], ["Step 2: Audit your website", <>Review homepage messaging, service pages, mobile experience, page speed, calls to action, contact information, enquiry forms, customer proof and navigation. Consider a <ArticleLink href={internalLinks.services}>Website Audit</ArticleLink> if you are unsure where the problems are.</>], ["Step 3: Build content around customer problems", "Do not only talk about what your business sells. Talk about the problems your potential customers are already experiencing."], ["Step 4: Build a conversion path", "Every major marketing channel should have somewhere useful to send people: Google Search → Helpful article → Relevant service page → Proof → CTA → Enquiry."], ["Step 5: Measure business results", "Look at website traffic, search impressions, clicks, service-page visits, WhatsApp clicks, enquiries, qualified leads, bookings and sales, not only likes and followers."]].map(([title, body]) => <div key={title} className="mb-5 last:mb-0"><h3 className="mb-1 text-lg font-bold">{title}</h3><p className={`leading-relaxed ${mutedText}`}>{body}</p></div>)}</section></FadeInSection>
 
-        {/* ── Newsletter Signup ── */}
-        <FadeInSection>
-          <div className="rounded-2xl bg-gradient-to-br from-orange-500 to-orange-700 p-8 mb-10 text-center text-white">
-            <p className="text-xs uppercase tracking-widest font-semibold mb-2 opacity-80">Stay ahead</p>
-            <h3 className="text-2xl font-extrabold mb-2">Get weekly growth insights</h3>
-            <p className="text-sm opacity-80 mb-5">No fluff. Just actionable digital marketing and SEO strategies, delivered every Tuesday.</p>
-            <AnimatePresence mode="wait">
-              {subscribed ? (
-                <motion.div key="done" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex items-center justify-center gap-2 text-white font-semibold">
-                  <FaCheckCircle /> You're in! Check your inbox.
-                </motion.div>
-              ) : (
-                <motion.form key="form" initial={{ opacity: 0 }} animate={{ opacity: 1 }} onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-                  <input
-                    type="email"
-                    placeholder="your@email.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    className="flex-1 rounded-lg px-4 py-2.5 text-sm text-gray-800 outline-none focus:ring-2 focus:ring-white"
-                  />
-                  <button type="submit" className="bg-white text-orange-600 font-semibold text-sm px-5 py-2.5 rounded-lg hover:bg-orange-50 transition shrink-0">
-                    Subscribe free →
-                  </button>
-                </motion.form>
-              )}
-            </AnimatePresence>
-          </div>
-        </FadeInSection>
+        <FadeInSection><section className={`mb-12 rounded-2xl border p-8 ${cardBg}`}><h2 className="mb-4 text-2xl font-extrabold text-orange-400">Your digital presence should work as a system</h2><p className={`mb-4 leading-relaxed ${mutedText}`}>Your website, SEO, content, branding and social media should support one another. Think of your digital marketing system like this:</p><p className="mb-5 rounded-xl bg-orange-50 p-4 text-center font-bold text-orange-700">SEARCH → CONTENT → WEBSITE → SERVICE PAGE → TRUST / PROOF → CTA → ENQUIRY</p><p className={`mb-4 leading-relaxed ${mutedText}`}>At LG Marketing Hub, we help businesses strengthen the digital foundations behind their marketing through <ArticleLink href={internalLinks.digitalMarketing}>Digital Marketing</ArticleLink>, <ArticleLink href={internalLinks.seo}>SEO</ArticleLink>, <ArticleLink href={internalLinks.website}>Website Design & Revamps</ArticleLink>, <ArticleLink href={internalLinks.branding}>Branding & Design</ArticleLink> and <ArticleLink href={internalLinks.content}>Content Creation</ArticleLink>.</p><p className={`leading-relaxed ${mutedText}`}>If your business is getting attention online but not enough enquiries, the answer may not be “Post more.” It may be time to fix the system behind your marketing.</p><div className="mt-6 flex flex-wrap gap-3"><a href={internalLinks.services} className="rounded-lg bg-orange-500 px-4 py-2.5 text-sm font-semibold text-white hover:bg-orange-600">Explore LG Marketing Hub Services</a><a href={internalLinks.contact} className="rounded-lg border border-orange-200 px-4 py-2.5 text-sm font-semibold text-orange-600 hover:border-orange-400">Contact LG Marketing Hub</a></div></section></FadeInSection>
 
-        {/* ── Related Articles ── */}
-        <FadeInSection>
-          <div className="mb-12">
-            <p className={`text-xs uppercase tracking-widest font-semibold mb-4 ${mutedText}`}>Related articles</p>
-            <div className="grid sm:grid-cols-3 gap-4">
-              {relatedArticles.map((a, i) => (
-                <div key={i} className={`rounded-xl border p-4 cursor-pointer hover:border-orange-300 transition ${cardBg}`}>
-                  <span className="text-xs text-orange-500 font-semibold bg-orange-50 px-2 py-0.5 rounded-full border border-orange-100">{a.tag}</span>
-                  <p className={`text-sm font-semibold mt-2 leading-snug ${dark ? "text-gray-200" : "text-gray-800"}`}>{a.title}</p>
-                  <p className={`text-xs mt-1 ${mutedText}`}>{a.mins} min read</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </FadeInSection>
+        <FadeInSection><section className={`mb-12 rounded-2xl border p-8 ${cardBg}`}><h2 className="mb-5 text-2xl font-extrabold text-orange-400">Frequently Asked Questions</h2>{[["Why is my business not getting customers online?", "Your business may be struggling because of unclear positioning, weak website conversion, poor targeting, limited search visibility, ineffective content or a missing conversion path."], ["How can I get more customers online?", "Define your target customer, improve your website, create useful content around customer problems, improve search visibility and create a clear path from discovery to enquiry."], ["Does posting more on social media get more customers?", "Not necessarily. Posting more can increase visibility, but your content also needs to reach the right audience and connect to a strong offer and conversion path."], ["Does my business need SEO?", "If potential customers search online for the products or services you provide, SEO can improve your visibility in search. It should work alongside your website, content and wider digital marketing strategy."], ["What should I fix first: my website or social media?", "Start with the biggest bottleneck. If social media generates attention but your website does not convert, improve the website. If the website is strong but nobody finds it, improve visibility through SEO and content."]].map(([question, answer]) => <div key={question} className="mb-5 last:mb-0"><h3 className="mb-1 text-base font-bold">{question}</h3><p className={`leading-relaxed ${mutedText}`}>{answer}</p></div>)}</section></FadeInSection>
 
-        {/* ── Comments ── */}
-        <FadeInSection>
-          <div className={`rounded-2xl border p-6 ${cardBg}`}>
-            <h3 className="text-lg font-extrabold text-orange-400 mb-5">
-              Comments <span className={`text-sm font-normal ${mutedText}`}>({comments.length})</span>
-            </h3>
+        <FadeInSection><div className={`mb-10 rounded-2xl border p-6 ${cardBg}`}><p className={`mb-3 text-sm font-semibold ${mutedText}`}>Share this article</p><div className="flex flex-wrap gap-3">{[[<FaTwitter />, "Share on X", "https://twitter.com/intent/tweet"], [<FaLinkedin />, "LinkedIn", "https://linkedin.com/sharing/share-offsite/"], [<FaFacebook />, "Facebook", "https://facebook.com/sharer/sharer.php"]].map(([icon, label, href]) => <a key={label} href={href} target="_blank" rel="noopener noreferrer" className={`inline-flex items-center gap-2 rounded-lg border px-4 py-2 text-sm ${dark ? "border-gray-700 text-gray-400" : "border-gray-200 text-gray-500"}`}>{icon}{label}</a>)}<button onClick={() => { navigator.clipboard?.writeText(window.location.href); setCopied(true); setTimeout(() => setCopied(false), 2000); }} className={`inline-flex items-center gap-2 rounded-lg border px-4 py-2 text-sm ${dark ? "border-gray-700 text-gray-400" : "border-gray-200 text-gray-500"}`}>{copied ? <FaCheckCircle className="text-green-500" /> : <FaLink />}{copied ? "Copied!" : "Copy link"}</button></div></div></FadeInSection>
 
-            {/* Existing comments */}
-            <div className="space-y-5 mb-7">
-              <AnimatePresence>
-                {comments.map((c, i) => (
-                  <motion.div key={i} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-                    className={`flex gap-3`}>
-                    <div className="w-9 h-9 rounded-full bg-gradient-to-br from-orange-300 to-orange-500 flex items-center justify-center text-white text-xs font-bold shrink-0">
-                      {c.name.charAt(0)}
-                    </div>
-                    <div className={`flex-1 rounded-xl border px-4 py-3 ${dark ? "bg-gray-800 border-gray-700" : "bg-gray-50 border-gray-100"}`}>
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className={`text-sm font-semibold ${dark ? "text-gray-200" : "text-gray-800"}`}>{c.name}</span>
-                        <span className={`text-xs ${mutedText}`}>{c.time}</span>
-                      </div>
-                      <p className={`text-sm leading-relaxed ${mutedText}`}>{c.text}</p>
-                    </div>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
-            </div>
-
-            {/* Comment form */}
-            <form onSubmit={handleComment} className="space-y-3">
-              <p className={`text-sm font-semibold ${dark ? "text-gray-300" : "text-gray-700"}`}>Leave a comment</p>
-              <input
-                type="text"
-                placeholder="Your name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className={inputCls}
-                required
-              />
-              <textarea
-                placeholder="Share your thoughts..."
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-                rows={3}
-                className={`${inputCls} resize-none`}
-                required
-              />
-              <button type="submit"
-                className="bg-orange-500 hover:bg-orange-600 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition">
-                Post comment →
-              </button>
-            </form>
-          </div>
-        </FadeInSection>
-
-      </div>
+        <FadeInSection><section className={`rounded-2xl border p-6 ${cardBg}`}><h2 className="mb-5 text-lg font-extrabold text-orange-400">Comments <span className={`text-sm font-normal ${mutedText}`}>({comments.length})</span></h2><div className="mb-7 space-y-4">{comments.map((item, index) => <div key={`${item.name}-${index}`} className="flex gap-3"><div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-orange-400 text-xs font-bold text-white">{item.name.charAt(0)}</div><div className={`flex-1 rounded-xl border px-4 py-3 ${dark ? "border-gray-700 bg-gray-800" : "border-gray-100 bg-gray-50"}`}><p className="text-sm font-semibold">{item.name}</p><p className={`text-sm ${mutedText}`}>{item.text}</p></div></div>)}</div><form onSubmit={handleComment} className="space-y-3"><p className="text-sm font-semibold">Leave a comment</p><input type="text" required placeholder="Your name" value={name} onChange={(event) => setName(event.target.value)} className={inputCls} /><textarea required rows={3} placeholder="Share your thoughts..." value={comment} onChange={(event) => setComment(event.target.value)} className={`${inputCls} resize-none`} /><button className="rounded-lg bg-orange-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-orange-600">Post comment</button></form></section></FadeInSection>
+      </main>
     </div>
   );
 }

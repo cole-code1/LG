@@ -16,7 +16,6 @@ import {
   siTypescript,
   siTailwindcss,
   siNodedotjs,
-  siExpress,
   siDocker,
   siKubernetes,
   siPostgresql,
@@ -38,7 +37,8 @@ import {
   siNotion,
   siVite,
   siExcalidraw,
-  siFlask
+  siFlask,
+
 } from "simple-icons";
 
 export default function Home() {
@@ -57,7 +57,6 @@ export default function Home() {
   siTypescript,
   siTailwindcss,
   siNodedotjs,
-  siExpress,
   siDocker,
   siKubernetes,
   siPostgresql,
@@ -83,6 +82,10 @@ export default function Home() {
   siVite
 ];
 const marqueeLogos = [...logos, ...logos];
+// const companies = [
+
+// ];
+// const companyLogos = [...companies, ...companies];
 
   const services = [
     { title: "Social  Marketing", desc: "Ads, social media & conversion-focused campaigns", features: ["Social Media Strategy Development",
@@ -297,6 +300,35 @@ const marqueeLogos = [...logos, ...logos];
           </div>
         </div>
       </section>
+{/* ================= COMPANIES WE'VE WORKED WITH =================
+<section className="py-20 bg-neutral-950 overflow-hidden">
+  <FadeInSection>
+    <h2 className="text-3xl font-bold text-center text-white mb-4">
+      Companies We've Worked With
+    </h2>
+    <p className="text-center text-gray-400 mb-12">
+      Trusted by startups, growing businesses, and established organizations
+      to deliver reliable digital solutions.
+    </p>
+  </FadeInSection>
+
+  <div className="relative overflow-hidden">
+    <div className="flex animate-marquee items-center">
+      {companyLogos.map((company, index) => (
+        <div
+          key={index}
+          className="mx-12 flex items-center justify-center flex-shrink-0"
+        >
+          <img
+            src={company.logo}
+            alt={company.name}
+            className="h-12 md:h-16 w-auto object-contain transition-transform duration-300 hover:scale-110 grayscale hover:grayscale-0"
+          />
+        </div>
+      ))}
+    </div>
+  </div>
+</section> */}
 
       {/* ================= CTA ================= */}
       <section className="py-20  text-center" style={{backgroundColor: "#ffffff"}}>
