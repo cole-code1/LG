@@ -2,8 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { FaCheckCircle, FaFacebook, FaLink, FaMoon, FaSun, FaTwitter, FaLinkedin } from "react-icons/fa";
 
-const MotionDiv = motion.div;
-
 const internalLinks = {
   digitalMarketing: "/service-request",
   website: "/services/web-development",
@@ -25,7 +23,7 @@ const articleSections = [
 const tags = ["Digital Marketing", "SEO", "Website Marketing", "Lead Generation", "Kenya Business", "Content Marketing"];
 
 function FadeInSection({ children }) {
-  return <MotionDiv initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>{children}</MotionDiv>;
+  return <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>{children}</motion.div>;
 }
 
 function ArticleLink({ href, children }) {
@@ -83,7 +81,7 @@ export default function Blog() {
 
   return (
     <div className={`min-h-screen transition-colors duration-300 ${dark ? "bg-gray-950 text-gray-100" : "bg-white text-gray-900"}`}>
-      <div className="fixed left-0 top-0 z-50 h-1 w-full bg-gray-200"><MotionDiv className="h-full origin-left bg-orange-400" style={{ scaleX: progress / 100 }} /></div>
+      <div className="fixed left-0 top-0 z-50 h-1 w-full bg-gray-200"><motion.div className="h-full origin-left bg-orange-400" style={{ scaleX: progress / 100 }} /></div>
       <div className="fixed right-4 top-2 z-50 flex items-center gap-2"><span className={`rounded-full px-2 py-1 text-xs font-mono ${dark ? "bg-gray-800 text-orange-400" : "bg-orange-50 text-orange-600"}`}>{progress}% read</span><button onClick={() => setDark((value) => !value)} className={`rounded-full border p-2 ${dark ? "border-gray-700 bg-gray-800 text-yellow-400" : "border-gray-200 bg-white text-gray-600"}`} title="Toggle dark mode" aria-label="Toggle dark mode">{dark ? <FaSun size={14} /> : <FaMoon size={14} />}</button></div>
 
       <main ref={articleRef} className="mx-auto max-w-3xl px-6 pb-24 pt-20">
